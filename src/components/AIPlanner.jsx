@@ -6,7 +6,6 @@ import {
   TrendingUp, Activity, ShieldCheck, Clock, Sliders
 } from 'lucide-react'
 
-// Pre-configured intelligent preset plans based on goals
 const PRESET_PROTOCOLS = {
   hypertrophy: {
     title: 'Hypertrophy & Myofibrillar Density Protocol',
