@@ -65,7 +65,7 @@ export default function App() {
           setMobileOpen={setMobileOpen}
           onOpenCoach={() => setIsCoachOpen(true)}
         />
-
+ 
         {/* Workspace Dynamic Content Area */}
         <main className="flex-1 p-4 sm:p-8 max-w-7xl w-full mx-auto">
           <AnimatePresence mode="wait">
