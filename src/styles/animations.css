@@ -1,0 +1,148 @@
+﻿/**
+ * animations.css — Keyframes, transitions, and motion utilities
+ * ──────────────────────────────────────────────────────────────
+ * All animations used by Elite components.
+ * Import once in main.jsx or index.css @import.
+ */
+
+/* ─── Entrance animations ─────────────────────────────────── */
+
+.anim-fade-up {
+  animation: anim-fade-up 300ms cubic-bezier(0.22,1,0.36,1) forwards;
+}
+@keyframes anim-fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.anim-fade-in {
+  animation: anim-fade-in 250ms cubic-bezier(0.4,0,0.2,1) forwards;
+}
+@keyframes anim-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.anim-scale-in {
+  animation: anim-scale-in 200ms cubic-bezier(0.22,1,0.36,1) forwards;
+}
+@keyframes anim-scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ─── Stagger children ────────────────────────────────────── */
+/* Apply anim-delay-N to nth children for stagger effect */
+.anim-delay-1  { animation-delay: 50ms; }
+.anim-delay-2  { animation-delay: 100ms; }
+.anim-delay-3  { animation-delay: 150ms; }
+.anim-delay-4  { animation-delay: 200ms; }
+.anim-delay-5  { animation-delay: 250ms; }
+.anim-delay-6  { animation-delay: 300ms; }
+
+/* ─── Hover lift ──────────────────────────────────────────── */
+.hover-lift {
+  transition: transform 200ms cubic-bezier(0.4,0,0.2,1),
+              box-shadow 200ms cubic-bezier(0.4,0,0.2,1);
+}
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 24px rgba(0,217,255,0.12);
+}
+
+/* ─── Continuous looping ────────────────────────────────────  */
+
+/* Spin — loading indicators */
+.anim-spin {
+  animation: anim-spin 0.8s linear infinite;
+}
+@keyframes anim-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Pulse — live dots, heartbeat */
+.anim-pulse {
+  animation: anim-pulse 2s ease-in-out infinite;
+}
+@keyframes anim-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* Ping — dot rings */
+.anim-ping {
+  animation: anim-ping 1.8s cubic-bezier(0,0,0.2,1) infinite;
+}
+@keyframes anim-ping {
+  75%, 100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Glow pulse — cyan elements */
+.anim-glow-pulse {
+  animation: anim-glow-pulse 2s ease-in-out infinite;
+}
+@keyframes anim-glow-pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(0,217,255,0.2); }
+  50%       { box-shadow: 0 0 28px rgba(0,217,255,0.5); }
+}
+
+/* Float — ambient decorative elements */
+.anim-float {
+  animation: anim-float 7s ease-in-out infinite;
+}
+@keyframes anim-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+/* Scanner sweep line — for camera component */
+.anim-scan-sweep {
+  animation: anim-scan-sweep 2s linear infinite;
+}
+@keyframes anim-scan-sweep {
+  0%   { top: 0;    opacity: 1; }
+  90%  { top: 100%; opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* ─── Gradient text shimmer ──────────────────────────────── */
+.anim-gradient-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--accent-cyan)   0%,
+    var(--accent-purple) 40%,
+    var(--accent-cyan)   80%
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: anim-shimmer 4s linear infinite;
+}
+@keyframes anim-shimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+/* ─── Skeleton loading ────────────────────────────────────── */
+.anim-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-dark)       0%,
+    var(--bg-secondary)  50%,
+    var(--bg-dark)       100%
+  );
+  background-size: 200% 100%;
+  animation: anim-skeleton-sweep 1.5s ease-in-out infinite;
+}
+@keyframes anim-skeleton-sweep {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ─── Transition utilities ───────────────────────────────── */
+.transition-colors  { transition: color 200ms cubic-bezier(0.4,0,0.2,1), background-color 200ms cubic-bezier(0.4,0,0.2,1), border-color 200ms cubic-bezier(0.4,0,0.2,1); }
+.transition-shadow  { transition: box-shadow 200ms cubic-bezier(0.4,0,0.2,1); }
+.transition-all-200 { transition: all 200ms cubic-bezier(0.4,0,0.2,1); }
+.transition-all-300 { transition: all 300ms cubic-bezier(0.4,0,0.2,1); }

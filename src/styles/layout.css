@@ -1,0 +1,176 @@
+﻿/**
+ * layout.css — Elite Layout System
+ * ──────────────────────────────────────────────────────────
+ * Layout-specific utilities that complement index.css.
+ * All values derive from the :root tokens in index.css.
+ *
+ * Contents:
+ *   1. Container / page structure
+ *   2. Section helpers (app-section, section-gap)
+ *   3. Grid system (2-col, 3-col, 4-col)
+ *   4. Responsive overrides (mobile → tablet → desktop)
+ *   5. App-level layout (sidebar offset, header clearance)
+ */
+
+/* ─── 1. Container ────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-4);   /* 32px */
+  padding-right: var(--space-4);
+}
+
+/* ─── 2. Section Helpers ──────────────────────────────────── */
+
+/* Full-viewport section wrapper */
+.app-section {
+  min-height: 100vh;
+  width: 100%;
+  padding-top: var(--space-8);     /* 64px */
+  padding-bottom: var(--space-8);
+}
+
+/* Vertical spacer between major page sections */
+.section-gap {
+  height: var(--space-8);         /* 64px */
+  flex-shrink: 0;
+}
+
+/* Standard content-block padding */
+.section-inner {
+  padding-top: var(--space-6);    /* 48px */
+  padding-bottom: var(--space-6);
+}
+
+/* Section header row (title + right-side action) */
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);           /* 24px */
+  margin-bottom: var(--space-5); /* 40px */
+}
+
+/* ─── 3. Grid System ──────────────────────────────────────── */
+
+/* 2-column equal */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);           /* 32px */
+}
+
+/* 3-column equal */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+/* 4-column equal — KPI cards */
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2);           /* 16px */
+}
+
+/* Dashboard primary layout: 5/12 controls + 7/12 output */
+.grid-dashboard {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: var(--space-4);           /* 32px */
+  align-items: start;
+}
+
+/* Stack layout — vertical column with 24px gap */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);           /* 24px */
+}
+
+/* Cluster layout — horizontal row that wraps */
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);           /* 16px */
+}
+
+/* ─── 4. App-Level Layout ─────────────────────────────────── */
+
+/* Sidebar offset — matches 288px sidebar */
+.main-content {
+  flex: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header clearance for sticky 72px header */
+.header-offset {
+  margin-top: 72px;
+}
+
+/* Primary workspace padding */
+.workspace-padding {
+  padding: var(--space-5) var(--space-5); /* 40px all sides */
+}
+
+/* ─── 5. Responsive Overrides ─────────────────────────────── */
+
+/* ── Tablet (≤ 768px) ── */
+@media (max-width: 768px) {
+  .container {
+    padding-left: var(--space-3);   /* 24px */
+    padding-right: var(--space-3);
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace-padding {
+    padding: var(--space-3) var(--space-2); /* 24px 16px */
+  }
+
+  .section-header {
+    flex-direction: column;
+  }
+}
+
+/* ── Mobile (≤ 480px) ── */
+@media (max-width: 480px) {
+  .container {
+    padding-left: var(--space-2);   /* 16px */
+    padding-right: var(--space-2);
+  }
+
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .app-section {
+    padding-top: var(--space-5);    /* 40px */
+    padding-bottom: var(--space-5);
+  }
+
+  .workspace-padding {
+    padding: var(--space-2);        /* 16px */
+  }
+}
