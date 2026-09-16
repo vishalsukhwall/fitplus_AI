@@ -2,9 +2,70 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─────────────────────────────────────────
-   BASE RESET & DARK ARCHITECTURE (#030712)
-───────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   ELITE DESIGN SYSTEM — TITANIUM MINIMALIST DEEP SPACE
+   FitPulse AI → FitPulse Elite
+   ─────────────────────────────────────────────────────────────
+   Color Architecture:
+     --bg-dark:        #09090b  Deep Space Black  (all app bg)
+     --bg-secondary:   #0f0f1a  Card / Component bg
+     --text-primary:   #e8eaed  Titanium (main text)
+     --text-secondary: #64748b  Muted / captions
+     --accent-cyan:    #00d9ff  CTAs, active, scanner
+     --accent-purple:  #a78bfa  Data viz, trends
+     --success:        #00d084  Logged meals, positive
+     --danger:         #ff006e  Warnings, deletions
+     --border:         #1e293b  1px dividers / borders
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── 1. CSS CUSTOM PROPERTIES ─────────────────────────────── */
+:root {
+  /* Color tokens */
+  --bg-dark:        #09090b;
+  --bg-secondary:   #0f0f1a;
+  --text-primary:   #e8eaed;
+  --text-secondary: #64748b;
+  --accent-cyan:    #00d9ff;
+  --accent-purple:  #a78bfa;
+  --success:        #00d084;
+  --danger:         #ff006e;
+  --border:         #1e293b;
+
+  /* Typography scale */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+
+  --text-xs:   0.75rem;   /* 12px */
+  --text-sm:   0.875rem;  /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg:   1.125rem;  /* 18px */
+  --text-xl:   1.25rem;   /* 20px */
+  --text-2xl:  1.5rem;    /* 24px */
+  --text-3xl:  1.75rem;   /* 28px */
+  --text-4xl:  2.25rem;   /* 36px */
+  --text-5xl:  3rem;      /* 48px */
+
+  /* 8px grid spacing */
+  --space-1:  8px;
+  --space-2:  16px;
+  --space-3:  24px;
+  --space-4:  32px;
+  --space-5:  40px;
+  --space-6:  48px;
+  --space-7:  56px;
+  --space-8:  64px;
+
+  /* Easing */
+  --ease-out:  cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-snappy: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Glow helpers */
+  --glow-cyan:   0 0 20px rgba(0, 217, 255, 0.2);
+  --glow-cyan-lg: 0 0 30px rgba(0, 217, 255, 0.15);
+  --glow-purple: 0 0 20px rgba(167, 139, 250, 0.2);
+}
+
+/* ─── 2. BASE RESET ─────────────────────────────────────────── */
 @layer base {
   *, *::before, *::after {
     box-sizing: border-box;
@@ -15,56 +76,412 @@
   html {
     scroll-behavior: smooth;
     color-scheme: dark;
+    font-size: 16px;
   }
 
   body {
-    background-color: #030712;
-    color: #f1f5f9;
-    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: 1.6;
+    font-weight: 400;
+    letter-spacing: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
   }
 
-  /* Critical — guarantees #030712 deep background */
   #root {
     min-height: 100vh;
     width: 100%;
-    background-color: #030712;
+    background-color: var(--bg-dark);
+  }
+
+  /* ── Typography Hierarchy ─────────────────────────── */
+  h1 {
+    font-size: var(--text-5xl);
+    line-height: 1.08;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: var(--text-primary);
+  }
+  h2 {
+    font-size: var(--text-4xl);
+    line-height: 1.11;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    color: var(--text-primary);
+  }
+  h3 {
+    font-size: var(--text-3xl);
+    line-height: 1.14;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    color: var(--text-primary);
+  }
+  h4 {
+    font-size: var(--text-2xl);
+    line-height: 1.16;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  p {
+    font-size: var(--text-base);
+    line-height: 1.6;
+    color: var(--text-primary);
+    max-width: 90ch;
+  }
+  small, .text-caption {
+    font-size: var(--text-xs);
+    line-height: 1.33;
+    color: var(--text-secondary);
+  }
+  code, pre, kbd {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+  }
+
+  /* Focus ring — WCAG AA */
+  *:focus-visible {
+    outline: 2px solid var(--accent-cyan);
+    outline-offset: 2px;
   }
 }
- 
-/* ────────────────────────────────────────
-   COMPONENT UTILITIES & GLASSMORPHISM
-───────────────────────────────────────── */
+
+/* ─── 3. COMPONENT UTILITIES ─────────────────────────────────── */
 @layer components {
 
-  /* Advanced Glassmorphism Card */
+  /* ── 3a. Core Card ─────────────────────────────────── */
+  .elite-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    padding: var(--space-5);          /* 40px */
+    color: var(--text-primary);
+    backdrop-filter: blur(20px);
+    transition: box-shadow 200ms var(--ease-out), transform 200ms var(--ease-out);
+  }
+  .elite-card:hover {
+    box-shadow: var(--glow-cyan-lg);
+    transform: translateY(-2px);
+  }
+
+  /* Inner section divider inside cards */
+  .elite-card-inner {
+    padding: var(--space-3);          /* 24px */
+    border-top: 1px solid var(--border);
+  }
+
+  /* Legacy alias — keeps old class working */
   .glass-card {
-    @apply backdrop-blur-xl border rounded-2xl;
-    background: rgba(15, 23, 42, 0.68);
-    border-color: rgba(51, 65, 85, 0.45);
+    background: rgba(15, 15, 26, 0.7);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    backdrop-filter: blur(20px);
+    color: var(--text-primary);
+    transition: box-shadow 200ms var(--ease-out), transform 200ms var(--ease-out);
+  }
+  .glass-card:hover {
+    box-shadow: var(--glow-cyan-lg);
+    transform: translateY(-2px);
   }
 
-  /* Neon Emerald Radiant Border */
-  .glow-border {
-    border: 1px solid rgba(16, 185, 129, 0.45) !important;
-    box-shadow:
-      0 0 20px rgba(16, 185, 129, 0.16),
-      inset 0 0 20px rgba(16, 185, 129, 0.05);
+  /* ── 3b. Buttons ──────────────────────────────────── */
+
+  /* PRIMARY — Cyber Cyan */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 48px;
+    padding: 0 28px;
+    background: var(--accent-cyan);
+    color: var(--bg-dark);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    text-decoration: none;
+    user-select: none;
+    transition: box-shadow 200ms var(--ease-out), transform 200ms var(--ease-out), background 200ms var(--ease-out);
+  }
+  .btn-primary:hover {
+    background: #33e4ff;
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+  }
+  .btn-primary:active {
+    transform: translateY(0);
+    box-shadow: none;
   }
 
-  .glow-border-hover {
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  /* SECONDARY — Outlined */
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 48px;
+    padding: 0 28px;
+    background: transparent;
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    border: 1px solid var(--border);
+    border-radius: 0;
+    cursor: pointer;
+    text-decoration: none;
+    user-select: none;
+    transition: border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out), transform 200ms var(--ease-out), color 200ms var(--ease-out);
+    backdrop-filter: blur(12px);
   }
-  .glow-border-hover:hover {
-    border-color: rgba(16, 185, 129, 0.7) !important;
-    box-shadow:
-      0 0 32px rgba(16, 185, 129, 0.3),
-      inset 0 0 22px rgba(16, 185, 129, 0.08);
+  .btn-secondary:hover {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+    transform: translateY(-2px);
+    box-shadow: var(--glow-cyan);
+  }
+  .btn-secondary:active {
+    transform: translateY(0);
   }
 
-  /* Radiant Neon Gradient Text */
+  /* TERTIARY — Ghost */
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 16px;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    text-decoration: none;
+    user-select: none;
+    transition: color 200ms var(--ease-out), background 200ms var(--ease-out);
+  }
+  .btn-ghost:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  /* DANGER */
+  .btn-danger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 48px;
+    padding: 0 28px;
+    background: transparent;
+    color: var(--danger);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    border: 1px solid rgba(255, 0, 110, 0.4);
+    border-radius: 0;
+    cursor: pointer;
+    text-decoration: none;
+    user-select: none;
+    transition: all 200ms var(--ease-out);
+  }
+  .btn-danger:hover {
+    background: rgba(255, 0, 110, 0.08);
+    border-color: var(--danger);
+    box-shadow: 0 0 20px rgba(255, 0, 110, 0.2);
+    transform: translateY(-2px);
+  }
+
+  /* SUCCESS — Quantum Green */
+  .btn-success {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 48px;
+    padding: 0 28px;
+    background: var(--success);
+    color: var(--bg-dark);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    user-select: none;
+    transition: all 200ms var(--ease-out);
+  }
+  .btn-success:hover {
+    background: #00ec93;
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(0, 208, 132, 0.3);
+  }
+
+  /* ICON-ONLY variant */
+  .btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 200ms var(--ease-out);
+  }
+  .btn-icon:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-cyan);
+    box-shadow: var(--glow-cyan);
+  }
+
+  /* ── 3c. Input Fields ───────────────────────────────── */
+  .elite-input {
+    width: 100%;
+    height: 44px;
+    padding: 0 16px;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    border: 1px solid var(--border);
+    border-radius: 0;
+    outline: none;
+    transition: border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+  }
+  .elite-input::placeholder {
+    color: var(--text-secondary);
+  }
+  .elite-input:focus {
+    border-color: var(--accent-cyan);
+    box-shadow: var(--glow-cyan);
+  }
+
+  /* ── 3d. Badge / Pill ─────────────────────────────── */
+  .badge-cyan {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 10px;
+    background: rgba(0, 217, 255, 0.1);
+    border: 1px solid rgba(0, 217, 255, 0.3);
+    color: var(--accent-cyan);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    border-radius: 0;
+  }
+  .badge-purple {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 10px;
+    background: rgba(167, 139, 250, 0.1);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    color: var(--accent-purple);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    border-radius: 0;
+  }
+  .badge-success {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 10px;
+    background: rgba(0, 208, 132, 0.1);
+    border: 1px solid rgba(0, 208, 132, 0.3);
+    color: var(--success);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    border-radius: 0;
+  }
+  .badge-danger {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 10px;
+    background: rgba(255, 0, 110, 0.1);
+    border: 1px solid rgba(255, 0, 110, 0.3);
+    color: var(--danger);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    border-radius: 0;
+  }
+
+  /* ── 3e. Nav Active States ─────────────────────────── */
+  .nav-item-active {
+    background: rgba(0, 217, 255, 0.08);
+    border: 1px solid rgba(0, 217, 255, 0.25);
+    color: var(--accent-cyan);
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.08);
+  }
+  .nav-item-default {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    transition: all 200ms var(--ease-out);
+  }
+  .nav-item-default:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.03);
+    border-color: var(--border);
+  }
+
+  /* ── 3f. Skeleton Loader ───────────────────────────── */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--bg-dark)   0%,
+      var(--bg-secondary) 50%,
+      var(--bg-dark)   100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-pulse 1.5s ease-in-out infinite;
+    border-radius: 0;
+  }
+  @keyframes skeleton-pulse {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* ── 3g. Divider ───────────────────────────────────── */
+  .elite-divider {
+    height: 1px;
+    background: var(--border);
+    border: none;
+    margin: 0;
+  }
+
+  /* ── 3h. Text Utilities ──────────────────────────── */
+  .text-cyan   { color: var(--accent-cyan); }
+  .text-purple { color: var(--accent-purple); }
+  .text-success { color: var(--success); }
+  .text-danger { color: var(--danger); }
+  .text-muted  { color: var(--text-secondary); }
+
+  /* Cyan gradient text */
+  .text-cyan-gradient {
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Legacy alias */
   .text-neon-gradient {
     background: linear-gradient(90deg, #34d399, #14b8a6, #10b981);
     -webkit-background-clip: text;
@@ -73,109 +490,123 @@
     color: transparent;
   }
 
-  /* Cybernetic Dot-Grid Mesh Background */
-  .grid-bg {
-    background-image:
-      linear-gradient(rgba(16, 185, 129, 0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(16, 185, 129, 0.035) 1px, transparent 1px);
-    background-size: 56px 56px;
+  /* ── 3i. Glow Border Utilities ───────────────────── */
+  .glow-border {
+    border: 1px solid rgba(0, 217, 255, 0.35) !important;
+    box-shadow: var(--glow-cyan);
+  }
+  .glow-border-hover {
+    transition: border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out), transform 200ms var(--ease-out);
+  }
+  .glow-border-hover:hover {
+    border-color: rgba(0, 217, 255, 0.6) !important;
+    box-shadow: var(--glow-cyan-lg);
+    transform: translateY(-2px);
   }
 
-  /* Ambient Blur Blobs */
+  /* ── 3j. Dot-Grid Background ─────────────────────── */
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(0, 217, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 217, 255, 0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* ── 3k. Ambient Glow Blobs ──────────────────────── */
   .blob-glow {
     border-radius: 50%;
-    filter: blur(95px);
-    opacity: 0.15;
+    filter: blur(100px);
+    opacity: 0.12;
     position: absolute;
     pointer-events: none;
   }
 
-  /* ── Interactive CTA Buttons ── */
-  .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl
-           font-bold text-sm text-black bg-emerald-400
-           transition-all duration-300 cursor-pointer select-none;
-    padding: 12px 24px;
-    box-shadow:
-      0 0 24px rgba(16, 185, 129, 0.45),
-      0 4px 16px rgba(16, 185, 129, 0.25);
-    text-decoration: none;
-  }
-  .btn-primary:hover {
-    background-color: #6ee7b7;
-    transform: translateY(-2px) scale(1.02);
-    box-shadow:
-      0 0 38px rgba(16, 185, 129, 0.7),
-      0 6px 22px rgba(16, 185, 129, 0.35);
-  }
-  .btn-primary:active {
-    transform: translateY(0px) scale(0.98);
-  }
-
-  .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl
-           font-semibold text-sm text-slate-200 bg-slate-900/60
-           border border-slate-700/70 transition-all duration-300 cursor-pointer select-none;
-    padding: 12px 24px;
-    text-decoration: none;
-    backdrop-filter: blur(12px);
-  }
-  .btn-secondary:hover {
-    border-color: rgba(16, 185, 129, 0.6);
-    color: #34d399;
-    transform: translateY(-2px) scale(1.02);
-    background: rgba(30, 41, 59, 0.7);
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
-  }
-  .btn-secondary:active {
-    transform: translateY(0px) scale(0.98);
-  }
+  /* ── 3l. Section spacing helpers ─────────────────── */
+  .section-gap  { gap: var(--space-8); }
+  .section-pt   { padding-top: var(--space-6); }
+  .section-pb   { padding-bottom: var(--space-8); }
+  .card-padding { padding: var(--space-5); }
 }
 
-/* ─────────────────────────────────────────
-   ANIMATION KEYFRAMES & SHIFTS
-───────────────────────────────────────── */
+/* ─── 4. ANIMATION KEYFRAMES ─────────────────────────────────── */
+
+/* Gradient text shimmer */
 .animate-gradient-text {
-  background: linear-gradient(135deg, #10b981, #34d399, #6ee7b7, #14b8a6, #10b981);
+  background: linear-gradient(
+    135deg,
+    var(--accent-cyan)   0%,
+    var(--accent-purple) 40%,
+    var(--accent-cyan)   80%
+  );
   background-size: 300% 300%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  animation: gradient-shift 5s ease infinite;
+  animation: gradient-shift 6s ease infinite;
 }
 @keyframes gradient-shift {
   0%, 100% { background-position: 0% 50%; }
-  50%      { background-position: 100% 50%; }
+  50%       { background-position: 100% 50%; }
 }
 
+/* Subtle vertical float */
 .animate-float {
-  animation: float-ud 6s ease-in-out infinite;
+  animation: float-ud 7s ease-in-out infinite;
 }
 @keyframes float-ud {
-  0%, 100% { transform: translateY(0px); }
-  50%      { transform: translateY(-12px); }
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
 }
 
+/* Live ping dot */
 .animate-ping-live {
-  animation: ping-live 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+  animation: ping-live 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 @keyframes ping-live {
   75%, 100% { transform: scale(2.2); opacity: 0; }
 }
 
-/* Custom Webkit Scrollbar */
+/* Scan line sweep (for camera/scanner UI) */
+.animate-scan-line {
+  animation: scan-sweep 2s linear infinite;
+}
+@keyframes scan-sweep {
+  0%   { top: 0%; opacity: 1; }
+  90%  { top: 100%; opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Fade-in entrance */
+.animate-fade-in {
+  animation: fade-in 300ms var(--ease-out) forwards;
+}
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Pulse glow on cyan elements */
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(0, 217, 255, 0.2); }
+  50%       { box-shadow: 0 0 30px rgba(0, 217, 255, 0.5); }
+}
+
+/* ─── 5. SCROLLBAR ───────────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #030712;
+  background: var(--bg-dark);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 4px;
+  background: var(--border);
+  border-radius: 0;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #10b981;
+  background: var(--accent-cyan);
 }

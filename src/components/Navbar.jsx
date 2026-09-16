@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+﻿import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Zap, Menu, X, ChevronRight, Sparkles, Terminal } from 'lucide-react'
 
@@ -70,7 +70,7 @@ export default function Navbar({ scrolled }) {
           </motion.a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1 p-1 rounded-full bg-slate-950/60 border border-slate-800/80 backdrop-blur-md">
+          <nav className="hidden md:flex items-center gap-1 p-1 rounded-none bg-[var(--bg-dark)]/60 border border-slate-800/80 backdrop-blur-md">
             {NAV_LINKS.map(({ label, href }) => (
               <motion.a
                 key={label}

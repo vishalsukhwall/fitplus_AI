@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+﻿import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import {
   BarChart3, TrendingUp, HeartPulse, Activity,
@@ -37,14 +37,14 @@ export default function BiometricAnalytics() {
           </p>
         </div>
 
-        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+        <div className="flex items-center gap-1.5 p-1 rounded-none bg-[var(--bg-dark)] border border-slate-800 text-xs">
           {['7D', '30D', '90D', '1Y'].map(r => (
             <button
               key={r}
               onClick={() => setRange(r)}
               className={`
-                px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer
-                ${range === r ? 'bg-emerald-400 text-black shadow-[0_0_10px_rgba(16,185,129,0.3)]' : 'text-slate-400 hover:text-white'}
+                px-3 py-1.5 rounded-none font-bold transition-all cursor-pointer
+                ${range === r ? 'bg-[#00d9ff] text-black shadow-[0_0_10px_rgba(16,185,129,0.3)]' : 'text-slate-400 hover:text-white'}
               `}
             >
               {r}
@@ -55,19 +55,19 @@ export default function BiometricAnalytics() {
 
       {/* Top 3 Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-5 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80">
+        <div className="p-5 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80">
           <span className="text-xs text-slate-400 font-bold uppercase">Mean HRV Recovery</span>
-          <p className="text-2xl font-black text-emerald-400 mt-1">78.4 ms</p>
-          <span className="text-[11px] text-emerald-400 font-bold block mt-1">+9.2% parasympathetic tone</span>
+          <p className="text-2xl font-black text-[#00d9ff] mt-1">78.4 ms</p>
+          <span className="text-[11px] text-[#00d9ff] font-bold block mt-1">+9.2% parasympathetic tone</span>
         </div>
 
-        <div className="p-5 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80">
+        <div className="p-5 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80">
           <span className="text-xs text-slate-400 font-bold uppercase">Monthly Accumulated Volume</span>
-          <p className="text-2xl font-black text-teal-400 mt-1">584,200 kg</p>
-          <span className="text-[11px] text-teal-400 font-bold block mt-1">+14.2% progressive overload</span>
+          <p className="text-2xl font-black text-[#00d9ff] mt-1">584,200 kg</p>
+          <span className="text-[11px] text-[#00d9ff] font-bold block mt-1">+14.2% progressive overload</span>
         </div>
 
-        <div className="p-5 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80">
+        <div className="p-5 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80">
           <span className="text-xs text-slate-400 font-bold uppercase">Average Sleep Quality Index</span>
           <p className="text-2xl font-black text-purple-400 mt-1">91 / 100</p>
           <span className="text-[11px] text-purple-400 font-bold block mt-1">2h 14m restorative deep sleep</span>
@@ -78,9 +78,9 @@ export default function BiometricAnalytics() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
         {/* 1RM Strength Gains Table */}
-        <div className="lg:col-span-7 p-6 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 space-y-4 shadow-xl">
+        <div className="lg:col-span-7 p-6 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80 space-y-4 shadow-xl">
           <div className="flex items-center gap-2">
-            <Award size={18} className="text-emerald-400" />
+            <Award size={18} className="text-[#00d9ff]" />
             <h3 className="text-base font-extrabold text-white">Estimated 1RM Strength Trajectory</h3>
           </div>
 
@@ -88,7 +88,7 @@ export default function BiometricAnalytics() {
             {PR_PROGRESSIONS.map((pr) => (
               <div
                 key={pr.lift}
-                className="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex items-center justify-between"
+                className="p-4 rounded-none bg-[var(--bg-dark)]/70 border border-slate-800 flex items-center justify-between"
               >
                 <div>
                   <p className="text-xs font-bold text-white">{pr.lift}</p>
@@ -96,8 +96,8 @@ export default function BiometricAnalytics() {
                 </div>
 
                 <div className="text-right">
-                  <span className="text-sm font-black text-emerald-400">{pr.current}</span>
-                  <span className="text-[10px] font-extrabold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 block mt-0.5">
+                  <span className="text-sm font-black text-[#00d9ff]">{pr.current}</span>
+                  <span className="text-[10px] font-extrabold px-2 py-0.5 rounded bg-[#00d9ff]/10 text-[#33e4ff] block mt-0.5">
                     {pr.gain}
                   </span>
                 </div>
@@ -107,9 +107,9 @@ export default function BiometricAnalytics() {
         </div>
 
         {/* Muscle Volume Distribution Bar */}
-        <div className="lg:col-span-5 p-6 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 space-y-4 shadow-xl">
+        <div className="lg:col-span-5 p-6 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80 space-y-4 shadow-xl">
           <div className="flex items-center gap-2">
-            <BarChart3 size={18} className="text-teal-400" />
+            <BarChart3 size={18} className="text-[#00d9ff]" />
             <h3 className="text-base font-extrabold text-white">Weekly Volume Allocation</h3>
           </div>
 
@@ -120,7 +120,7 @@ export default function BiometricAnalytics() {
                   <span className="text-slate-300">{m.muscle}</span>
                   <span style={{ color: m.color }}>{m.sets} sets ({m.pct}%)</span>
                 </div>
-                <div className="w-full h-2 rounded-full bg-slate-950 overflow-hidden border border-slate-800">
+                <div className="w-full h-2 rounded-none bg-[var(--bg-dark)] overflow-hidden border border-slate-800">
                   <div
                     className="h-full rounded-full"
                     style={{ width: `${m.pct * 2}%`, backgroundColor: m.color }}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+﻿import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import {
   Flame, Zap, TrendingUp, HeartPulse, Dumbbell,
@@ -70,11 +70,11 @@ export default function Dashboard({
     <div className="space-y-8">
 
       {/* Hero Welcome & Diagnostic Banner */}
-      <div className="relative rounded-2xl p-6 sm:p-8 bg-gradient-to-r from-slate-900 via-slate-900/90 to-slate-950 border border-emerald-500/30 overflow-hidden shadow-2xl">
-        <div className="absolute -top-16 -right-16 w-64 h-64 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="relative rounded-none p-6 sm:p-8 bg-gradient-to-r from-slate-900 via-slate-900/90 to-slate-950 border border-[rgba(0,217,255,0.2)] overflow-hidden shadow-2xl">
+        <div className="absolute -top-16 -right-16 w-64 h-64 bg-[#00d9ff]/15 rounded-none blur-3xl pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-none bg-[#00d9ff]/10 border border-[rgba(0,217,255,0.2)] text-[#00d9ff] text-xs font-bold mb-3">
               <Sparkles size={13} />
               <span>AI Telemetry Engine: Peak CNS Recovery State</span>
             </div>
@@ -98,7 +98,7 @@ export default function Dashboard({
               onClick={() => setActiveView('macros')}
               className="btn-secondary text-xs py-2.5 px-4 cursor-pointer"
             >
-              <Utensils size={14} className="text-teal-400" />
+              <Utensils size={14} className="text-[#00d9ff]" />
               <span>Macro Tracker</span>
             </button>
           </div>
@@ -113,12 +113,12 @@ export default function Dashboard({
             <motion.div
               key={kpi.title}
               whileHover={{ y: -3 }}
-              className="p-5 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 hover:border-emerald-500/40 transition-colors shadow-lg"
+              className="p-5 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80 hover:border-[rgba(0,217,255,0.25)] transition-colors shadow-lg"
             >
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs font-semibold text-slate-400">{kpi.title}</span>
                 <div
-                  className="p-2 rounded-xl"
+                  className="p-2 rounded-none"
                   style={{ backgroundColor: `${kpi.color}15` }}
                 >
                   <Icon size={16} style={{ color: kpi.color }} />
@@ -144,7 +144,7 @@ export default function Dashboard({
       </div>
 
       {/* Interactive Telemetry Spline Chart Section */}
-      <div className="p-6 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 shadow-xl">
+      <div className="p-6 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80 shadow-xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
             <h3 className="text-base font-extrabold text-white">
@@ -155,15 +155,15 @@ export default function Dashboard({
             </p>
           </div>
 
-          <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+          <div className="flex items-center gap-1.5 p-1 rounded-none bg-[var(--bg-dark)] border border-slate-800 text-xs">
             {['7D', '30D', '90D'].map(t => (
               <button
                 key={t}
                 onClick={() => setTimeframe(t)}
                 className={`
-                  px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer
+                  px-3 py-1.5 rounded-none font-bold transition-all cursor-pointer
                   ${timeframe === t
-                    ? 'bg-emerald-400 text-black shadow-[0_0_10px_rgba(16,185,129,0.4)]'
+                    ? 'bg-[#00d9ff] text-black shadow-[0_0_10px_rgba(16,185,129,0.4)]'
                     : 'text-slate-400 hover:text-white'
                   }
                 `}
@@ -226,7 +226,7 @@ export default function Dashboard({
           <span>Wed (2,520 kcal)</span>
           <span>Thu (2,790 kcal)</span>
           <span>Fri (2,840 kcal)</span>
-          <span className="text-emerald-400 font-bold">Today · Sat (3,110 kcal · Peak)</span>
+          <span className="text-[#00d9ff] font-bold">Today · Sat (3,110 kcal · Peak)</span>
         </div>
       </div>
 
@@ -234,10 +234,10 @@ export default function Dashboard({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
         {/* Left Column: Today's Active Session Queue */}
-        <div className="lg:col-span-7 p-6 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 space-y-4">
+        <div className="lg:col-span-7 p-6 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80 space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+              <div className="p-2 rounded-none bg-[#00d9ff]/10 border border-[rgba(0,217,255,0.2)] text-[#00d9ff]">
                 <Dumbbell size={16} />
               </div>
               <div>
@@ -252,7 +252,7 @@ export default function Dashboard({
 
             <button
               onClick={() => setActiveView('logger')}
-              className="text-xs font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 cursor-pointer"
+              className="text-xs font-bold text-[#00d9ff] hover:text-[#33e4ff] flex items-center gap-1 cursor-pointer"
             >
               <span>Launch Logger</span>
               <ArrowUpRight size={14} />
@@ -272,17 +272,17 @@ export default function Dashboard({
                   key={exercise.name}
                   onClick={() => toggleSet(idx)}
                   className={`
-                    p-3.5 rounded-xl border flex items-center justify-between cursor-pointer transition-all
+                    p-3.5 rounded-none border flex items-center justify-between cursor-pointer transition-all
                     ${isDone
-                      ? 'bg-emerald-500/10 border-emerald-500/40 text-slate-300'
-                      : 'bg-slate-950/60 border-slate-800 hover:border-slate-700 text-slate-200'
+                      ? 'bg-[#00d9ff]/10 border-[rgba(0,217,255,0.25)] text-slate-300'
+                      : 'bg-[var(--bg-dark)]/60 border-slate-800 hover:border-slate-700 text-slate-200'
                     }
                   `}
                 >
                   <div className="flex items-center gap-3">
                     <CheckCircle2
                       size={18}
-                      className={isDone ? 'text-emerald-400 fill-emerald-400' : 'text-slate-600'}
+                      className={isDone ? 'text-[#00d9ff] fill-emerald-400' : 'text-slate-600'}
                     />
                     <div>
                       <p className={`text-xs font-bold ${isDone ? 'line-through opacity-75' : ''}`}>
@@ -309,10 +309,10 @@ export default function Dashboard({
         </div>
 
         {/* Right Column: Macro Rings & Nutrition Breakdown */}
-        <div className="lg:col-span-5 p-6 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 space-y-5">
+        <div className="lg:col-span-5 p-6 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80 space-y-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
+              <div className="p-2 rounded-none bg-[rgba(0,217,255,0.05)] border border-[#00d9ff]/30 text-[#00d9ff]">
                 <Utensils size={16} />
               </div>
               <div>
@@ -323,7 +323,7 @@ export default function Dashboard({
 
             <button
               onClick={() => setActiveView('macros')}
-              className="text-xs font-bold text-teal-400 hover:text-teal-300 flex items-center gap-1 cursor-pointer"
+              className="text-xs font-bold text-[#00d9ff] hover:text-[#33e4ff] flex items-center gap-1 cursor-pointer"
             >
               <span>Calculator</span>
               <ArrowUpRight size={14} />
@@ -347,9 +347,9 @@ export default function Dashboard({
                       {m.current} / {m.target} {m.unit}
                     </span>
                   </div>
-                  <div className="w-full h-2 rounded-full bg-slate-950 overflow-hidden border border-slate-800">
+                  <div className="w-full h-2 rounded-none bg-[var(--bg-dark)] overflow-hidden border border-slate-800">
                     <div
-                      className="h-full rounded-full transition-all duration-500"
+                      className="h-full rounded-none transition-all duration-500"
                       style={{ width: `${pct}%`, backgroundColor: m.color }}
                     />
                   </div>
@@ -359,9 +359,9 @@ export default function Dashboard({
           </div>
 
           {/* Quick Log Alert */}
-          <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-center justify-between text-xs">
+          <div className="p-3.5 rounded-none bg-[var(--bg-dark)]/80 border border-slate-800 flex items-center justify-between text-xs">
             <span className="text-slate-400 font-medium">Next scheduled feeding:</span>
-            <span className="text-emerald-400 font-bold">Post-Workout Isolate · 35g P</span>
+            <span className="text-[#00d9ff] font-bold">Post-Workout Isolate · 35g P</span>
           </div>
         </div>
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+﻿import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Timer, Play, Pause, RotateCcw, CheckCircle2,
@@ -130,9 +130,9 @@ export default function WorkoutLogger({ activeVolume, setActiveVolume }) {
       {/* Top Session Telemetry Bar */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {/* Stopwatch Card */}
-        <div className="p-5 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 flex items-center justify-between">
+        <div className="p-5 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+            <div className="p-2.5 rounded-none bg-[#00d9ff]/10 border border-[rgba(0,217,255,0.2)] text-[#00d9ff]">
               <Timer size={18} />
             </div>
             <div>
@@ -143,21 +143,21 @@ export default function WorkoutLogger({ activeVolume, setActiveVolume }) {
 
           <button
             onClick={() => setIsRunning(!isRunning)}
-            className="p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-300 hover:text-white cursor-pointer"
+            className="p-2.5 rounded-none bg-[var(--bg-dark)] border border-slate-800 text-slate-300 hover:text-white cursor-pointer"
           >
             {isRunning ? <Pause size={16} /> : <Play size={16} />}
           </button>
         </div>
 
         {/* Rest Interval Timer Card */}
-        <div className="p-5 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 flex items-center justify-between">
+        <div className="p-5 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className={`p-2.5 rounded-xl border ${restRunning ? 'bg-teal-500/20 text-teal-300 border-teal-500 animate-pulse' : 'bg-slate-950 text-slate-500 border-slate-800'}`}>
+            <div className={`p-2.5 rounded-none border ${restRunning ? 'bg-[rgba(0,217,255,0.08)] text-[#33e4ff] border-[#00d9ff] animate-pulse' : 'bg-[var(--bg-dark)] text-slate-500 border-slate-800'}`}>
               <Clock size={18} />
             </div>
             <div>
               <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Rest Countdown</p>
-              <p className="text-2xl font-black text-teal-400 tracking-tight">
+              <p className="text-2xl font-black text-[#00d9ff] tracking-tight">
                 {restSeconds > 0 ? `${restSeconds}s` : 'Ready'}
               </p>
             </div>
@@ -168,7 +168,7 @@ export default function WorkoutLogger({ activeVolume, setActiveVolume }) {
               <button
                 key={s}
                 onClick={() => startRestTimer(s)}
-                className="px-2 py-1 text-[10px] font-bold rounded-lg bg-slate-950 border border-slate-800 text-slate-400 hover:text-white cursor-pointer"
+                className="px-2 py-1 text-[10px] font-bold rounded-none bg-[var(--bg-dark)] border border-slate-800 text-slate-400 hover:text-white cursor-pointer"
               >
                 {s}s
               </button>
@@ -177,14 +177,14 @@ export default function WorkoutLogger({ activeVolume, setActiveVolume }) {
         </div>
 
         {/* Total Volume Accumulated Card */}
-        <div className="p-5 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 flex items-center justify-between">
+        <div className="p-5 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+            <div className="p-2.5 rounded-none bg-[#00d9ff]/10 border border-[rgba(0,217,255,0.2)] text-[#00d9ff]">
               <Dumbbell size={18} />
             </div>
             <div>
               <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Total Volume</p>
-              <p className="text-2xl font-black text-emerald-400 tracking-tight">
+              <p className="text-2xl font-black text-[#00d9ff] tracking-tight">
                 {(activeVolume || 14850).toLocaleString()} <span className="text-xs text-slate-400 font-semibold">kg</span>
               </p>
             </div>
@@ -201,12 +201,12 @@ export default function WorkoutLogger({ activeVolume, setActiveVolume }) {
         {exercises.map((exercise) => (
           <div
             key={exercise.id}
-            className="p-6 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 shadow-xl space-y-4"
+            className="p-6 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80 shadow-xl space-y-4"
           >
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
               <div className="flex items-center gap-2.5">
                 <h3 className="text-base font-extrabold text-white">{exercise.name}</h3>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-950 border border-slate-800 text-teal-400">
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-none bg-[var(--bg-dark)] border border-slate-800 text-[#00d9ff]">
                   {exercise.target}
                 </span>
               </div>
@@ -230,10 +230,10 @@ export default function WorkoutLogger({ activeVolume, setActiveVolume }) {
                 <div
                   key={set.id}
                   className={`
-                    grid grid-cols-12 gap-2 items-center p-3 rounded-xl border transition-all
+                    grid grid-cols-12 gap-2 items-center p-3 rounded-none border transition-all
                     ${set.done
-                      ? 'bg-emerald-500/10 border-emerald-500/40 text-slate-300'
-                      : 'bg-slate-950/60 border-slate-800 text-slate-200'
+                      ? 'bg-[#00d9ff]/10 border-[rgba(0,217,255,0.25)] text-slate-300'
+                      : 'bg-[var(--bg-dark)]/60 border-slate-800 text-slate-200'
                     }
                   `}
                 >
@@ -246,7 +246,7 @@ export default function WorkoutLogger({ activeVolume, setActiveVolume }) {
                       type="number"
                       value={set.weight}
                       onChange={(e) => handleUpdateSet(exercise.id, set.id, 'weight', e.target.value)}
-                      className="w-16 py-1 px-2 rounded-lg bg-slate-900 border border-slate-800 text-xs font-bold text-white outline-none focus:border-emerald-500"
+                      className="w-16 py-1 px-2 rounded-none bg-slate-900 border border-slate-800 text-xs font-bold text-white outline-none focus:border-[#00d9ff]"
                     />
                     <span className="text-xs text-slate-500">kg</span>
                   </div>
@@ -256,7 +256,7 @@ export default function WorkoutLogger({ activeVolume, setActiveVolume }) {
                       type="number"
                       value={set.reps}
                       onChange={(e) => handleUpdateSet(exercise.id, set.id, 'reps', e.target.value)}
-                      className="w-16 py-1 px-2 rounded-lg bg-slate-900 border border-slate-800 text-xs font-bold text-white outline-none focus:border-emerald-500"
+                      className="w-16 py-1 px-2 rounded-none bg-slate-900 border border-slate-800 text-xs font-bold text-white outline-none focus:border-[#00d9ff]"
                     />
                     <span className="text-xs text-slate-500">reps</span>
                   </div>
@@ -265,9 +265,9 @@ export default function WorkoutLogger({ activeVolume, setActiveVolume }) {
                     <button
                       onClick={() => handleToggleSet(exercise.id, set.id)}
                       className={`
-                        p-2 rounded-xl transition-all cursor-pointer
+                        p-2 rounded-none transition-all cursor-pointer
                         ${set.done
-                          ? 'bg-emerald-400 text-black shadow-[0_0_12px_rgba(16,185,129,0.5)]'
+                          ? 'bg-[#00d9ff] text-black shadow-[0_0_12px_rgba(16,185,129,0.5)]'
                           : 'bg-slate-900 hover:bg-slate-800 text-slate-500 border border-slate-800'
                         }
                       `}

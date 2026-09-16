@@ -18,36 +18,28 @@ export default function App() {
   const [activeVolume, setActiveVolume] = useState(14850)
 
   return (
-    <div className="min-h-screen bg-[#030712] text-slate-100 font-sans flex relative overflow-x-hidden">
+    <div className="min-h-screen text-slate-100 font-sans flex relative overflow-x-hidden" style={{ background: 'var(--bg-dark)' }}>
 
-      {/* Cybernetic Dot-Grid Mesh Background */}
-      <div className="grid-bg fixed inset-0 pointer-events-none z-0 opacity-80" />
+      {/* Cyber Dot-Grid Mesh Background */}
+      <div className="grid-bg fixed inset-0 pointer-events-none z-0 opacity-60" />
 
-      {/* Ambient Morphing Glow Blobs */}
+      {/* Ambient Glow Blobs — Cyan + Purple */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <motion.div
-          className="blob-glow bg-emerald-500/20"
-          animate={{
-            x: [0, 50, -30, 0],
-            y: [0, -40, 30, 0],
-            scale: [1, 1.2, 0.9, 1],
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ width: 700, height: 700, top: -200, left: 100 }}
+          className="blob-glow"
+          style={{ background: 'rgba(0,217,255,0.15)', width: 600, height: 600, top: -150, left: 80 }}
+          animate={{ x: [0, 40, -25, 0], y: [0, -30, 25, 0], scale: [1, 1.15, 0.95, 1] }}
+          transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
-          className="blob-glow bg-teal-500/15"
-          animate={{
-            x: [0, -60, 40, 0],
-            y: [0, 50, -40, 0],
-            scale: [1, 1.15, 1, 1],
-          }}
-          transition={{ duration: 24, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ width: 600, height: 600, bottom: -100, right: 100 }}
+          className="blob-glow"
+          style={{ background: 'rgba(167,139,250,0.12)', width: 500, height: 500, bottom: -80, right: 80 }}
+          animate={{ x: [0, -50, 30, 0], y: [0, 40, -35, 0], scale: [1, 1.1, 1, 1] }}
+          transition={{ duration: 26, repeat: Infinity, ease: 'easeInOut' }}
         />
       </div>
 
-      {/* SaaS Dashboard Persistent Sidebar */}
+      {/* Persistent Sidebar */}
       <Sidebar
         activeView={activeView}
         setActiveView={setActiveView}
@@ -56,18 +48,20 @@ export default function App() {
         onOpenCoach={() => setIsCoachOpen(true)}
       />
 
-      {/* Main Workspace Column */}
+      {/* Main Content Column */}
       <div className="flex-1 lg:pl-72 flex flex-col min-h-screen relative z-10">
 
-        {/* Top Header Navigation Bar */}
+        {/* Top Navigation Bar */}
         <Header
           activeView={activeView}
           setMobileOpen={setMobileOpen}
           onOpenCoach={() => setIsCoachOpen(true)}
         />
+
  
         {/* Workspace Dynamic Content Area */}
-        <main className="flex-1 p-4 sm:p-8 max-w-7xl w-full mx-auto">
+        <main style={{ padding: '32px 40px', maxWidth: '1280px', width: '100%', margin: '0 auto', flex: 1 }}
+              className="sm:px-10">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeView}
@@ -115,16 +109,25 @@ export default function App() {
         </main>
       </div>
 
-      {/* Floating Action Button for AI Coach (Global Access) */}
+      {/* Floating AI Coach Button — Global Access */}
       <motion.button
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.92 }}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
         onClick={() => setIsCoachOpen(true)}
-        className="fixed bottom-6 right-6 z-40 p-3.5 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 text-black font-extrabold shadow-[0_0_25px_rgba(16,185,129,0.5)] flex items-center gap-2 cursor-pointer"
+        style={{
+          position: 'fixed', bottom: '28px', right: '28px', zIndex: 40,
+          display: 'flex', alignItems: 'center', gap: '8px',
+          padding: '0 20px', height: '48px',
+          background: 'var(--accent-cyan)',
+          color: 'var(--bg-dark)',
+          border: 'none', borderRadius: 0, cursor: 'pointer',
+          fontSize: 'var(--text-sm)', fontWeight: 700,
+          boxShadow: '0 0 30px rgba(0,217,255,0.35)',
+        }}
         aria-label="Open AI Assistant"
       >
-        <Sparkles size={18} />
-        <span className="text-xs font-black hidden sm:inline">AI Coach</span>
+        <Sparkles size={16} aria-hidden="true" />
+        <span className="hidden sm:inline">AI Coach</span>
       </motion.button>
 
       {/* Global AI Coach Chat Drawer */}

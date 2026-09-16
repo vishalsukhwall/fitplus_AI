@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+﻿import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Sparkles, Dumbbell, Zap, Sliders, Copy, Check,
@@ -167,9 +167,9 @@ Days: ${program.days.map(d => `\n\n${d.dayName}\n` + d.exercises.map(e => `- ${e
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
         {/* Left Parameter Controls Panel */}
-        <div className="lg:col-span-5 p-6 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 shadow-xl space-y-5">
+        <div className="lg:col-span-5 p-6 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80 shadow-xl space-y-5">
           <div className="flex items-center gap-3 border-b border-slate-800 pb-4">
-            <div className="p-2 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400">
+            <div className="p-2 rounded-none bg-[#00d9ff]/15 border border-[rgba(0,217,255,0.2)] text-[#00d9ff]">
               <Sliders size={18} />
             </div>
             <div>
@@ -201,10 +201,10 @@ Days: ${program.days.map(d => `\n\n${d.dayName}\n` + d.exercises.map(e => `- ${e
                     type="button"
                     onClick={() => setGoal(item.id)}
                     className={`
-                      p-2.5 rounded-xl text-left border transition-all cursor-pointer
+                      p-2.5 rounded-none text-left border transition-all cursor-pointer
                       ${goal === item.id
-                        ? 'bg-emerald-500/15 border-emerald-500/50 text-emerald-300 shadow-[0_0_12px_rgba(16,185,129,0.15)]'
-                        : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:border-slate-700'
+                        ? 'bg-[#00d9ff]/15 border-[rgba(0,217,255,0.3)] text-[#33e4ff] shadow-[0_0_12px_rgba(16,185,129,0.15)]'
+                        : 'bg-[var(--bg-dark)]/60 border-slate-800 text-slate-400 hover:border-slate-700'
                       }
                     `}
                   >
@@ -227,10 +227,10 @@ Days: ${program.days.map(d => `\n\n${d.dayName}\n` + d.exercises.map(e => `- ${e
                     type="button"
                     onClick={() => setExperience(lvl)}
                     className={`
-                      py-2 px-1 rounded-xl text-xs font-bold text-center capitalize border transition-all cursor-pointer
+                      py-2 px-1 rounded-none text-xs font-bold text-center capitalize border transition-all cursor-pointer
                       ${experience === lvl
-                        ? 'bg-emerald-500/15 border-emerald-500 text-emerald-300'
-                        : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:border-slate-700'
+                        ? 'bg-[#00d9ff]/15 border-[#00d9ff] text-[#33e4ff]'
+                        : 'bg-[var(--bg-dark)]/60 border-slate-800 text-slate-400 hover:border-slate-700'
                       }
                     `}
                   >
@@ -253,10 +253,10 @@ Days: ${program.days.map(d => `\n\n${d.dayName}\n` + d.exercises.map(e => `- ${e
                       type="button"
                       onClick={() => setFrequency(d)}
                       className={`
-                        py-2 text-xs font-bold rounded-lg border text-center transition-all cursor-pointer
+                        py-2 text-xs font-bold rounded-none border text-center transition-all cursor-pointer
                         ${frequency === d
-                          ? 'bg-emerald-500/20 border-emerald-500 text-emerald-300'
-                          : 'bg-slate-950/60 border-slate-800 text-slate-400'
+                          ? 'bg-[#00d9ff]/20 border-[#00d9ff] text-[#33e4ff]'
+                          : 'bg-[var(--bg-dark)]/60 border-slate-800 text-slate-400'
                         }
                       `}
                     >
@@ -273,7 +273,7 @@ Days: ${program.days.map(d => `\n\n${d.dayName}\n` + d.exercises.map(e => `- ${e
                 <select
                   value={split}
                   onChange={(e) => setSplit(e.target.value)}
-                  className="w-full py-2 px-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-slate-200 outline-none focus:border-emerald-500"
+                  className="w-full py-2 px-2.5 rounded-none bg-[var(--bg-dark)] border border-slate-800 text-xs font-semibold text-slate-200 outline-none focus:border-[#00d9ff]"
                 >
                   <option value="upper_lower">Upper / Lower Split</option>
                   <option value="ppl">Push / Pull / Legs</option>
@@ -299,10 +299,10 @@ Days: ${program.days.map(d => `\n\n${d.dayName}\n` + d.exercises.map(e => `- ${e
                     type="button"
                     onClick={() => setEquipment(eq.id)}
                     className={`
-                      p-2 text-center rounded-xl text-[11.5px] font-semibold border transition-all cursor-pointer
+                      p-2 text-center rounded-none text-[11.5px] font-semibold border transition-all cursor-pointer
                       ${equipment === eq.id
-                        ? 'bg-teal-500/15 border-teal-500 text-teal-300'
-                        : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:border-slate-700'
+                        ? 'bg-[rgba(0,217,255,0.06)] border-[#00d9ff] text-[#33e4ff]'
+                        : 'bg-[var(--bg-dark)]/60 border-slate-800 text-slate-400 hover:border-slate-700'
                       }
                     `}
                   >
@@ -329,10 +329,10 @@ Days: ${program.days.map(d => `\n\n${d.dayName}\n` + d.exercises.map(e => `- ${e
                     type="button"
                     onClick={() => setInjury(inj.id)}
                     className={`
-                      py-1.5 px-1 text-center rounded-lg text-[11px] font-bold border transition-all cursor-pointer
+                      py-1.5 px-1 text-center rounded-none text-[11px] font-bold border transition-all cursor-pointer
                       ${injury === inj.id
-                        ? 'bg-purple-500/20 border-purple-500 text-purple-300'
-                        : 'bg-slate-950/60 border-slate-800 text-slate-400'
+                        ? 'bg-[rgba(167,139,250,0.1)] border-[#a78bfa] text-[#a78bfa]'
+                        : 'bg-[var(--bg-dark)]/60 border-slate-800 text-slate-400'
                       }
                     `}
                   >
@@ -367,7 +367,7 @@ Days: ${program.days.map(d => `\n\n${d.dayName}\n` + d.exercises.map(e => `- ${e
         </div>
 
         {/* Right Output Program Display Panel */}
-        <div className="lg:col-span-7 p-6 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 shadow-2xl relative overflow-hidden space-y-6">
+        <div className="lg:col-span-7 p-6 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80 shadow-2xl relative overflow-hidden space-y-6">
 
           {/* Staged Neural Loading Overlay */}
           <AnimatePresence>
@@ -376,18 +376,18 @@ Days: ${program.days.map(d => `\n\n${d.dayName}\n` + d.exercises.map(e => `- ${e
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="absolute inset-0 z-30 bg-[#030712]/92 backdrop-blur-xl flex flex-col items-center justify-center p-8 text-center"
+                className="absolute inset-0 z-30 bg-[var(--bg-dark)]/92 backdrop-blur-xl flex flex-col items-center justify-center p-8 text-center"
               >
-                <div className="w-14 h-14 rounded-2xl bg-emerald-500/15 border border-emerald-500/40 flex items-center justify-center mb-4">
-                  <Zap size={26} className="text-emerald-400 animate-pulse" />
+                <div className="w-14 h-14 rounded-none bg-[#00d9ff]/15 border border-[rgba(0,217,255,0.25)] flex items-center justify-center mb-4">
+                  <Zap size={26} className="text-[#00d9ff] animate-pulse" />
                 </div>
                 <h4 className="text-lg font-black text-white mb-2">
                   Building Periodized Training Architecture
                 </h4>
-                <p className="text-xs font-semibold text-emerald-400 min-h-[20px] mb-4">
+                <p className="text-xs font-semibold text-[#00d9ff] min-h-[20px] mb-4">
                   {loadingSteps[stepIndex]}
                 </p>
-                <div className="w-64 h-2 rounded-full bg-slate-900 overflow-hidden">
+                <div className="w-64 h-2 rounded-none bg-slate-900 overflow-hidden">
                   <div
                     className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-300"
                     style={{ width: `${((stepIndex + 1) / loadingSteps.length) * 100}%` }}
@@ -401,7 +401,7 @@ Days: ${program.days.map(d => `\n\n${d.dayName}\n` + d.exercises.map(e => `- ${e
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 uppercase">
+                <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-none bg-[#00d9ff]/15 text-[#00d9ff] border border-[rgba(0,217,255,0.2)] uppercase">
                   Active AI Prescription
                 </span>
                 <span className="text-xs text-slate-500">
@@ -419,9 +419,9 @@ Days: ${program.days.map(d => `\n\n${d.dayName}\n` + d.exercises.map(e => `- ${e
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCopy}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-bold cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-none bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-bold cursor-pointer"
               >
-                {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
+                {copied ? <Check size={14} className="text-[#00d9ff]" /> : <Copy size={14} />}
                 <span>{copied ? 'Copied' : 'Copy'}</span>
               </button>
 
@@ -429,7 +429,7 @@ Days: ${program.days.map(d => `\n\n${d.dayName}\n` + d.exercises.map(e => `- ${e
                 onClick={() => {
                   if (setActiveView) setActiveView('logger')
                 }}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold hover:bg-emerald-500/30 cursor-pointer"
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-none bg-[#00d9ff]/20 border border-[rgba(0,217,255,0.25)] text-[#33e4ff] text-xs font-bold hover:bg-[#00d9ff]/30 cursor-pointer"
               >
                 <span>Log Session</span>
                 <ArrowRight size={13} />
@@ -444,10 +444,10 @@ Days: ${program.days.map(d => `\n\n${d.dayName}\n` + d.exercises.map(e => `- ${e
                 key={idx}
                 onClick={() => setActiveDayIndex(idx)}
                 className={`
-                  px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer
+                  px-4 py-2 rounded-none text-xs font-bold whitespace-nowrap transition-all cursor-pointer
                   ${activeDayIndex === idx
-                    ? 'bg-emerald-500/20 border border-emerald-500/50 text-emerald-300'
-                    : 'bg-slate-950/60 border border-slate-800 text-slate-400 hover:text-slate-200'
+                    ? 'bg-[#00d9ff]/20 border border-[rgba(0,217,255,0.3)] text-[#33e4ff]'
+                    : 'bg-[var(--bg-dark)]/60 border border-slate-800 text-slate-400 hover:text-slate-200'
                   }
                 `}
               >
@@ -461,27 +461,27 @@ Days: ${program.days.map(d => `\n\n${d.dayName}\n` + d.exercises.map(e => `- ${e
             <div className="space-y-3">
               <div className="flex items-center justify-between text-xs text-slate-400 font-semibold px-1">
                 <span>Prescribed Movements</span>
-                <span className="text-emerald-400">{program.days[activeDayIndex].focus}</span>
+                <span className="text-[#00d9ff]">{program.days[activeDayIndex].focus}</span>
               </div>
 
               <div className="space-y-2.5">
                 {program.days[activeDayIndex].exercises.map((ex, i) => (
                   <div
                     key={i}
-                    className="p-4 rounded-xl bg-slate-950/70 border border-slate-800/80 hover:border-slate-700/80 transition-all space-y-2"
+                    className="p-4 rounded-none bg-[var(--bg-dark)]/70 border border-slate-800/80 hover:border-slate-700/80 transition-all space-y-2"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                       <div>
                         <div className="flex items-center gap-2">
                           <span className="text-xs font-black text-white">{ex.name}</span>
-                          <span className="text-[9.5px] font-extrabold px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-teal-400">
+                          <span className="text-[9.5px] font-extrabold px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-[#00d9ff]">
                             {ex.target}
                           </span>
                         </div>
                       </div>
 
                       <div className="flex items-center gap-2 text-xs">
-                        <span className="font-extrabold text-emerald-400">{ex.sets}</span>
+                        <span className="font-extrabold text-[#00d9ff]">{ex.sets}</span>
                         <span className="text-slate-400 bg-slate-900 px-2 py-0.5 rounded border border-slate-800 font-bold text-[10.5px]">
                           {ex.rpe}
                         </span>
@@ -491,7 +491,7 @@ Days: ${program.days.map(d => `\n\n${d.dayName}\n` + d.exercises.map(e => `- ${e
                       </div>
                     </div>
 
-                    <p className="text-[11px] text-slate-400 leading-relaxed bg-slate-900/50 p-2 rounded-lg border border-slate-800/50">
+                    <p className="text-[11px] text-slate-400 leading-relaxed bg-slate-900/50 p-2 rounded-none border border-slate-800/50">
                       💡 <span className="font-semibold text-slate-300">Biomechanical Cue:</span> {ex.cue}
                     </p>
                   </div>
@@ -503,10 +503,10 @@ Days: ${program.days.map(d => `\n\n${d.dayName}\n` + d.exercises.map(e => `- ${e
           {/* Footer Diagnostic Tag */}
           <div className="flex items-center justify-between pt-3 border-t border-slate-800 text-[11px] text-slate-500">
             <span className="flex items-center gap-1.5">
-              <ShieldCheck size={14} className="text-emerald-400" />
+              <ShieldCheck size={14} className="text-[#00d9ff]" />
               <span>Autoregulated RPE threshold calibrated</span>
             </span>
-            <span className="text-emerald-400 font-semibold">
+            <span className="text-[#00d9ff] font-semibold">
               RPE Target: {program.rpeTarget}
             </span>
           </div>

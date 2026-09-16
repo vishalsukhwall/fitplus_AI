@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+﻿import React, { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Utensils, Calculator, Flame, Scale, Plus,
@@ -224,12 +224,12 @@ export default function MacroTracker() {
     <div className="space-y-8">
 
       {/* Top Banner: Real-Time Macro Telemetry Summary */}
-      <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900/95 to-slate-950 border border-emerald-500/30 shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="p-6 sm:p-8 rounded-none bg-gradient-to-r from-slate-900 via-slate-900/95 to-slate-950 border border-[rgba(0,217,255,0.2)] shadow-2xl relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[#00d9ff]/10 rounded-none blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-none bg-[#00d9ff]/15 border border-[rgba(0,217,255,0.2)] text-[#00d9ff] text-xs font-bold mb-3">
               <Scale size={13} />
               <span>Biometric Macro Calibration Engine</span>
             </div>
@@ -243,17 +243,17 @@ export default function MacroTracker() {
 
           <div className="flex items-center gap-3">
             {/* Live Caloric Delta Counter */}
-            <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-right">
+            <div className="p-4 rounded-none bg-[var(--bg-dark)]/80 border border-slate-800 text-right">
               <span className="text-[10.5px] font-extrabold text-slate-400 uppercase block">Daily Target</span>
-              <span className="text-xl sm:text-2xl font-black text-emerald-400">
+              <span className="text-xl sm:text-2xl font-black text-[#00d9ff]">
                 {calculations.targetCal.toLocaleString()}{' '}
                 <span className="text-xs text-slate-500">kcal</span>
               </span>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-right">
+            <div className="p-4 rounded-none bg-[var(--bg-dark)]/80 border border-slate-800 text-right">
               <span className="text-[10.5px] font-extrabold text-slate-400 uppercase block">Remaining</span>
-              <span className={`text-xl sm:text-2xl font-black ${calculations.targetCal - loggedTotals.cal >= 0 ? 'text-teal-300' : 'text-amber-400'}`}>
+              <span className={`text-xl sm:text-2xl font-black ${calculations.targetCal - loggedTotals.cal >= 0 ? 'text-[#33e4ff]' : 'text-amber-400'}`}>
                 {calculations.targetCal - loggedTotals.cal}{' '}
                 <span className="text-xs text-slate-500">kcal</span>
               </span>
@@ -308,12 +308,12 @@ export default function MacroTracker() {
             <motion.div
               key={m.title}
               whileHover={{ y: -2 }}
-              className="p-5 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 shadow-lg space-y-3"
+              className="p-5 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80 shadow-lg space-y-3"
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-slate-400">{m.title}</span>
                 <div
-                  className="p-2 rounded-xl"
+                  className="p-2 rounded-none"
                   style={{ backgroundColor: `${m.color}15`, color: m.color }}
                 >
                   <Icon size={16} />
@@ -334,7 +334,7 @@ export default function MacroTracker() {
               </div>
 
               {/* Progress Bar */}
-              <div className="w-full h-2.5 rounded-full bg-slate-950 overflow-hidden border border-slate-800">
+              <div className="w-full h-2.5 rounded-none bg-[var(--bg-dark)] overflow-hidden border border-slate-800">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${pct}%` }}
@@ -355,9 +355,9 @@ export default function MacroTracker() {
         <div className="lg:col-span-7 space-y-6">
 
           {/* Form to Add New Food Item */}
-          <div className="p-6 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 shadow-xl space-y-5">
+          <div className="p-6 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80 shadow-xl space-y-5">
             <div className="flex items-center gap-3 border-b border-slate-800 pb-4">
-              <div className="p-2 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400">
+              <div className="p-2 rounded-none bg-[#00d9ff]/15 border border-[rgba(0,217,255,0.2)] text-[#00d9ff]">
                 <Plus size={18} />
               </div>
               <div>
@@ -383,7 +383,7 @@ export default function MacroTracker() {
                     placeholder="e.g. Oatmeal with Peanut Butter & Banana"
                     value={foodName}
                     onChange={(e) => setFoodName(e.target.value)}
-                    className="w-full py-2.5 px-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-medium text-white placeholder-slate-600 outline-none focus:border-emerald-400 transition-colors"
+                    className="w-full py-2.5 px-3.5 rounded-none bg-[var(--bg-dark)] border border-slate-800 text-xs font-medium text-white placeholder-slate-600 outline-none focus:border-emerald-400 transition-colors"
                   />
                 </div>
 
@@ -396,7 +396,7 @@ export default function MacroTracker() {
                     placeholder="e.g. 1 bowl (250g)"
                     value={foodPortion}
                     onChange={(e) => setFoodPortion(e.target.value)}
-                    className="w-full py-2.5 px-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-medium text-white placeholder-slate-600 outline-none focus:border-emerald-400 transition-colors"
+                    className="w-full py-2.5 px-3.5 rounded-none bg-[var(--bg-dark)] border border-slate-800 text-xs font-medium text-white placeholder-slate-600 outline-none focus:border-emerald-400 transition-colors"
                   />
                 </div>
               </div>
@@ -404,7 +404,7 @@ export default function MacroTracker() {
               {/* Calories, Protein, Carbs, Fats, and Category */}
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
                 <div>
-                  <label className="block text-[11px] font-bold text-emerald-400 mb-1">
+                  <label className="block text-[11px] font-bold text-[#00d9ff] mb-1">
                     Calories (kcal) *
                   </label>
                   <input
@@ -413,12 +413,12 @@ export default function MacroTracker() {
                     placeholder="480"
                     value={foodCal}
                     onChange={(e) => setFoodCal(e.target.value)}
-                    className="w-full py-2 px-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold text-white outline-none focus:border-emerald-400"
+                    className="w-full py-2 px-2.5 rounded-none bg-[var(--bg-dark)] border border-slate-800 text-xs font-bold text-white outline-none focus:border-emerald-400"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-emerald-300 mb-1">
+                  <label className="block text-[11px] font-bold text-[#33e4ff] mb-1">
                     Protein (g) *
                   </label>
                   <input
@@ -427,12 +427,12 @@ export default function MacroTracker() {
                     placeholder="35"
                     value={foodP}
                     onChange={(e) => setFoodP(e.target.value)}
-                    className="w-full py-2 px-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold text-white outline-none focus:border-emerald-400"
+                    className="w-full py-2 px-2.5 rounded-none bg-[var(--bg-dark)] border border-slate-800 text-xs font-bold text-white outline-none focus:border-emerald-400"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-teal-400 mb-1">
+                  <label className="block text-[11px] font-bold text-[#00d9ff] mb-1">
                     Carbs (g)
                   </label>
                   <input
@@ -440,7 +440,7 @@ export default function MacroTracker() {
                     placeholder="45"
                     value={foodC}
                     onChange={(e) => setFoodC(e.target.value)}
-                    className="w-full py-2 px-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold text-white outline-none focus:border-teal-400"
+                    className="w-full py-2 px-2.5 rounded-none bg-[var(--bg-dark)] border border-slate-800 text-xs font-bold text-white outline-none focus:border-teal-400"
                   />
                 </div>
 
@@ -453,7 +453,7 @@ export default function MacroTracker() {
                     placeholder="12"
                     value={foodF}
                     onChange={(e) => setFoodF(e.target.value)}
-                    className="w-full py-2 px-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold text-white outline-none focus:border-amber-400"
+                    className="w-full py-2 px-2.5 rounded-none bg-[var(--bg-dark)] border border-slate-800 text-xs font-bold text-white outline-none focus:border-amber-400"
                   />
                 </div>
 
@@ -464,7 +464,7 @@ export default function MacroTracker() {
                   <select
                     value={foodCategory}
                     onChange={(e) => setFoodCategory(e.target.value)}
-                    className="w-full py-2 px-2 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-slate-300 outline-none focus:border-emerald-400"
+                    className="w-full py-2 px-2 rounded-none bg-[var(--bg-dark)] border border-slate-800 text-xs font-semibold text-slate-300 outline-none focus:border-emerald-400"
                   >
                     <option value="Breakfast">Breakfast</option>
                     <option value="Lunch">Lunch</option>
@@ -479,7 +479,7 @@ export default function MacroTracker() {
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
-                className="w-full btn-primary py-3 rounded-xl flex items-center justify-center gap-2 cursor-pointer font-bold text-xs"
+                className="w-full btn-primary py-3 rounded-none flex items-center justify-center gap-2 cursor-pointer font-bold text-xs"
               >
                 <Plus size={16} />
                 <span>Add Food Item to Daily Log</span>
@@ -497,11 +497,11 @@ export default function MacroTracker() {
                     key={p.name}
                     type="button"
                     onClick={() => handleAddPreset(p)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-950 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-none bg-[var(--bg-dark)] hover:bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer"
                   >
-                    <Plus size={12} className="text-emerald-400" />
+                    <Plus size={12} className="text-[#00d9ff]" />
                     <span>{p.name}</span>
-                    <span className="text-[10px] text-emerald-400 font-bold">+{p.p}g P</span>
+                    <span className="text-[10px] text-[#00d9ff] font-bold">+{p.p}g P</span>
                   </button>
                 ))}
               </div>
@@ -509,7 +509,7 @@ export default function MacroTracker() {
           </div>
 
           {/* Today's Food Intake Log List with Delete & Check off */}
-          <div className="p-6 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 shadow-xl space-y-4">
+          <div className="p-6 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80 shadow-xl space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
               <div>
                 <h3 className="text-base font-extrabold text-white">
@@ -521,15 +521,15 @@ export default function MacroTracker() {
               </div>
 
               {/* Category Filter Tabs */}
-              <div className="flex gap-1 p-1 rounded-xl bg-slate-950 border border-slate-800 text-[11px] font-bold">
+              <div className="flex gap-1 p-1 rounded-none bg-[var(--bg-dark)] border border-slate-800 text-[11px] font-bold">
                 {['All', 'Breakfast', 'Lunch', 'Dinner', 'Snacks'].map(cat => (
                   <button
                     key={cat}
                     onClick={() => setFilterCategory(cat)}
                     className={`
-                      px-2.5 py-1 rounded-lg transition-all cursor-pointer
+                      px-2.5 py-1 rounded-none transition-all cursor-pointer
                       ${filterCategory === cat
-                        ? 'bg-emerald-400 text-black shadow-sm'
+                        ? 'bg-[#00d9ff] text-black shadow-sm'
                         : 'text-slate-400 hover:text-white'
                       }
                     `}
@@ -556,9 +556,9 @@ export default function MacroTracker() {
                       exit={{ opacity: 0, x: -20 }}
                       transition={{ duration: 0.2 }}
                       className={`
-                        p-3.5 rounded-xl border flex items-center justify-between gap-3 transition-all
+                        p-3.5 rounded-none border flex items-center justify-between gap-3 transition-all
                         ${item.completed
-                          ? 'bg-slate-950/70 border-slate-800/80'
+                          ? 'bg-[var(--bg-dark)]/70 border-slate-800/80'
                           : 'bg-slate-900/40 border-slate-800/50 opacity-60'
                         }
                       `}
@@ -569,9 +569,9 @@ export default function MacroTracker() {
                           type="button"
                           onClick={() => handleToggleCompleted(item.id)}
                           className={`
-                            p-1.5 rounded-lg border transition-all cursor-pointer
+                            p-1.5 rounded-none border transition-all cursor-pointer
                             ${item.completed
-                              ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400'
+                              ? 'bg-[#00d9ff]/20 border-[rgba(0,217,255,0.3)] text-[#00d9ff]'
                               : 'bg-slate-900 border-slate-800 text-slate-600 hover:text-slate-400'
                             }
                           `}
@@ -585,7 +585,7 @@ export default function MacroTracker() {
                             <span className={`text-xs font-bold ${item.completed ? 'text-white' : 'text-slate-400 line-through'}`}>
                               {item.name}
                             </span>
-                            <span className="text-[9.5px] font-bold px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-teal-400">
+                            <span className="text-[9.5px] font-bold px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-[#00d9ff]">
                               {item.category}
                             </span>
                           </div>
@@ -598,7 +598,7 @@ export default function MacroTracker() {
                       {/* Right: Macro Pills & Delete Button */}
                       <div className="flex items-center gap-3">
                         <div className="text-right">
-                          <span className="text-xs font-black text-emerald-400 block leading-tight">
+                          <span className="text-xs font-black text-[#00d9ff] block leading-tight">
                             {item.cal} kcal
                           </span>
                           <span className="text-[10px] text-slate-400 font-semibold">
@@ -609,7 +609,7 @@ export default function MacroTracker() {
                         <button
                           type="button"
                           onClick={() => handleDeleteMeal(item.id)}
-                          className="p-1.5 rounded-lg text-slate-500 hover:text-red-400 hover:bg-slate-900 transition-colors cursor-pointer"
+                          className="p-1.5 rounded-none text-slate-500 hover:text-red-400 hover:bg-slate-900 transition-colors cursor-pointer"
                           title="Remove food item"
                         >
                           <Trash2 size={15} />
@@ -625,8 +625,8 @@ export default function MacroTracker() {
             <div className="pt-3 border-t border-slate-800/80 flex flex-wrap items-center justify-between text-xs font-bold text-slate-400">
               <span>Current Daily Intake: <strong className="text-white">{loggedTotals.cal} kcal</strong></span>
               <div className="flex gap-3 text-slate-300">
-                <span className="text-emerald-400">{loggedTotals.p}g Protein</span>
-                <span className="text-teal-400">{loggedTotals.c}g Carbs</span>
+                <span className="text-[#00d9ff]">{loggedTotals.p}g Protein</span>
+                <span className="text-[#00d9ff]">{loggedTotals.c}g Carbs</span>
                 <span className="text-amber-400">{loggedTotals.f}g Fats</span>
               </div>
             </div>
@@ -638,9 +638,9 @@ export default function MacroTracker() {
         <div className="lg:col-span-5 space-y-6">
 
           {/* Biometric Calculator Settings */}
-          <div className="p-6 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 shadow-xl space-y-4">
+          <div className="p-6 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-slate-800/80 shadow-xl space-y-4">
             <div className="flex items-center gap-3 border-b border-slate-800 pb-3">
-              <div className="p-2 rounded-xl bg-teal-500/15 border border-teal-500/30 text-teal-400">
+              <div className="p-2 rounded-none bg-[rgba(0,217,255,0.06)] border border-[#00d9ff]/30 text-[#00d9ff]">
                 <Calculator size={17} />
               </div>
               <div>
@@ -664,7 +664,7 @@ export default function MacroTracker() {
                     type="number"
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
-                    className="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-800 font-bold text-white outline-none focus:border-teal-400"
+                    className="w-full py-2 px-3 rounded-none bg-[var(--bg-dark)] border border-slate-800 font-bold text-white outline-none focus:border-teal-400"
                   />
                 </div>
                 <div>
@@ -675,7 +675,7 @@ export default function MacroTracker() {
                     type="number"
                     value={height}
                     onChange={(e) => setHeight(e.target.value)}
-                    className="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-800 font-bold text-white outline-none focus:border-teal-400"
+                    className="w-full py-2 px-3 rounded-none bg-[var(--bg-dark)] border border-slate-800 font-bold text-white outline-none focus:border-teal-400"
                   />
                 </div>
               </div>
@@ -690,7 +690,7 @@ export default function MacroTracker() {
                     type="number"
                     value={age}
                     onChange={(e) => setAge(e.target.value)}
-                    className="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-800 font-bold text-white outline-none focus:border-teal-400"
+                    className="w-full py-2 px-3 rounded-none bg-[var(--bg-dark)] border border-slate-800 font-bold text-white outline-none focus:border-teal-400"
                   />
                 </div>
                 <div>
@@ -704,10 +704,10 @@ export default function MacroTracker() {
                         type="button"
                         onClick={() => setGender(g)}
                         className={`
-                          py-2 font-bold capitalize rounded-lg border text-center transition-all cursor-pointer
+                          py-2 font-bold capitalize rounded-none border text-center transition-all cursor-pointer
                           ${gender === g
-                            ? 'bg-teal-500/20 border-teal-500 text-teal-300'
-                            : 'bg-slate-950/60 border-slate-800 text-slate-400'
+                            ? 'bg-[rgba(0,217,255,0.08)] border-[#00d9ff] text-[#33e4ff]'
+                            : 'bg-[var(--bg-dark)]/60 border-slate-800 text-slate-400'
                           }
                         `}
                       >
@@ -726,7 +726,7 @@ export default function MacroTracker() {
                 <select
                   value={activity}
                   onChange={(e) => setActivity(e.target.value)}
-                  className="w-full py-2 px-2.5 rounded-xl bg-slate-950 border border-slate-800 font-semibold text-slate-300 outline-none focus:border-teal-400"
+                  className="w-full py-2 px-2.5 rounded-none bg-[var(--bg-dark)] border border-slate-800 font-semibold text-slate-300 outline-none focus:border-teal-400"
                 >
                   <option value="1.2">Sedentary (Desk Job)</option>
                   <option value="1.375">Lightly Active (1–3 training days)</option>
@@ -752,10 +752,10 @@ export default function MacroTracker() {
                       type="button"
                       onClick={() => setGoalOffset(item.id)}
                       className={`
-                        py-1.5 px-1 rounded-lg border font-bold text-center transition-all cursor-pointer
+                        py-1.5 px-1 rounded-none border font-bold text-center transition-all cursor-pointer
                         ${goalOffset === item.id
-                          ? 'bg-emerald-500/20 border-emerald-500 text-emerald-300'
-                          : 'bg-slate-950 border-slate-800 text-slate-400'
+                          ? 'bg-[#00d9ff]/20 border-[#00d9ff] text-[#33e4ff]'
+                          : 'bg-[var(--bg-dark)] border-slate-800 text-slate-400'
                         }
                       `}
                     >
@@ -768,7 +768,7 @@ export default function MacroTracker() {
 
             {/* Calculated Metrics Badges */}
             <div className="grid grid-cols-3 gap-2 pt-2 text-center border-t border-slate-800/80">
-              <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800">
+              <div className="p-2.5 rounded-none bg-[var(--bg-dark)] border border-slate-800">
                 <span className="text-[10px] text-slate-500 font-bold uppercase block">BMI</span>
                 <span className="text-base font-black text-white">{calculations.bmi}</span>
                 <span className="text-[9px] font-bold block" style={{ color: calculations.bmiColor }}>
@@ -776,22 +776,22 @@ export default function MacroTracker() {
                 </span>
               </div>
 
-              <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800">
+              <div className="p-2.5 rounded-none bg-[var(--bg-dark)] border border-slate-800">
                 <span className="text-[10px] text-slate-500 font-bold uppercase block">BMR</span>
                 <span className="text-base font-black text-white">{calculations.bmr}</span>
                 <span className="text-[9px] text-slate-500 block">kcal</span>
               </div>
 
-              <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800">
+              <div className="p-2.5 rounded-none bg-[var(--bg-dark)] border border-slate-800">
                 <span className="text-[10px] text-slate-500 font-bold uppercase block">TDEE</span>
-                <span className="text-base font-black text-emerald-400">{calculations.tdee}</span>
+                <span className="text-base font-black text-[#00d9ff]">{calculations.tdee}</span>
                 <span className="text-[9px] text-slate-500 block">kcal</span>
               </div>
             </div>
           </div>
 
           {/* Hydration Widget */}
-          <div className="p-5 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 shadow-xl space-y-3">
+          <div className="p-5 rounded-none bg-[rgba(15,15,26,0.6)] backdrop-blur-xl border border-cyan-500/30 shadow-xl space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5 text-cyan-400 font-bold text-xs">
                 <Droplets size={16} />
@@ -802,9 +802,9 @@ export default function MacroTracker() {
               </span>
             </div>
 
-            <div className="w-full h-2.5 rounded-full bg-slate-950 overflow-hidden border border-slate-800">
+            <div className="w-full h-2.5 rounded-none bg-[var(--bg-dark)] overflow-hidden border border-slate-800">
               <div
-                className="h-full bg-cyan-400 rounded-full transition-all duration-300"
+                className="h-full bg-cyan-400 rounded-none transition-all duration-300"
                 style={{ width: `${Math.min((waterLoggedMl / (parseFloat(calculations.waterTargetL) * 1000)) * 100, 100)}%` }}
               />
             </div>
@@ -813,7 +813,7 @@ export default function MacroTracker() {
               <span className="text-[11px] text-slate-400">Target: {calculations.waterTargetL} L / day</span>
               <button
                 onClick={() => setWaterLoggedMl(w => Math.min(w + 250, 6000))}
-                className="px-3 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 text-xs font-bold transition-colors cursor-pointer"
+                className="px-3 py-1 rounded-none bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 text-xs font-bold transition-colors cursor-pointer"
               >
                 + Log 250ml
               </button>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+﻿import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Sparkles, X, Send, Bot, User, Brain,
@@ -105,18 +105,18 @@ export default function AICoachModal({ isOpen, onClose }) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-            className="fixed top-0 right-0 bottom-0 z-50 w-full max-w-lg bg-[#030712] border-l border-slate-800 shadow-2xl flex flex-col"
+            className="fixed top-0 right-0 bottom-0 z-50 w-full max-w-lg bg-[var(--bg-dark)] border-l border-slate-800 shadow-2xl flex flex-col"
           >
             {/* Drawer Header */}
-            <div className="p-5 border-b border-slate-800/80 flex items-center justify-between bg-slate-950/60">
+            <div className="p-5 border-b border-slate-800/80 flex items-center justify-between bg-[var(--bg-dark)]/60">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
+                <div className="w-9 h-9 rounded-none bg-[#00d9ff]/20 border border-[rgba(0,217,255,0.25)] flex items-center justify-center text-[#00d9ff]">
                   <Brain size={18} />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
                     <h3 className="text-sm font-black text-white">FitPulse AI Assistant</h3>
-                    <span className="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                    <span className="text-[9px] font-extrabold px-2 py-0.5 rounded-none bg-[#00d9ff]/15 text-[#33e4ff] border border-[rgba(0,217,255,0.2)]">
                       Neural v3.4
                     </span>
                   </div>
@@ -128,7 +128,7 @@ export default function AICoachModal({ isOpen, onClose }) {
 
               <button
                 onClick={onClose}
-                className="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-slate-900 cursor-pointer"
+                className="p-2 text-slate-400 hover:text-white rounded-none hover:bg-slate-900 cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -145,15 +145,15 @@ export default function AICoachModal({ isOpen, onClose }) {
                   >
                     <div
                       className={`
-                        max-w-[85%] p-4 rounded-2xl text-xs leading-relaxed
+                        max-w-[85%] p-4 rounded-none text-xs leading-relaxed
                         ${isCoach
                           ? 'bg-slate-900/90 text-slate-200 border border-slate-800 rounded-tl-sm'
-                          : 'bg-emerald-500/20 text-white border border-emerald-500/40 rounded-tr-sm shadow-[0_0_15px_rgba(16,185,129,0.15)]'
+                          : 'bg-[#00d9ff]/20 text-white border border-[rgba(0,217,255,0.25)] rounded-tr-sm shadow-[0_0_15px_rgba(16,185,129,0.15)]'
                         }
                       `}
                     >
                       <div className="flex items-center justify-between gap-4 text-[10px] font-bold text-slate-500 mb-1.5">
-                        <span className={isCoach ? 'text-emerald-400' : 'text-slate-300'}>
+                        <span className={isCoach ? 'text-[#00d9ff]' : 'text-slate-300'}>
                           {isCoach ? 'FitPulse Coach' : 'You'}
                         </span>
                         <span>{m.time}</span>
@@ -165,7 +165,7 @@ export default function AICoachModal({ isOpen, onClose }) {
               })}
 
               {isTyping && (
-                <div className="flex items-center gap-2 p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-xs text-emerald-400 w-fit">
+                <div className="flex items-center gap-2 p-3 rounded-none bg-[rgba(15,15,26,0.6)] border border-slate-800 text-xs text-[#00d9ff] w-fit">
                   <Sparkles size={13} className="animate-spin" />
                   <span>Synthesizing sports science recommendation...</span>
                 </div>
@@ -175,13 +175,13 @@ export default function AICoachModal({ isOpen, onClose }) {
             </div>
 
             {/* Quick Prompt Chips */}
-            <div className="px-5 py-2.5 border-t border-slate-900 bg-slate-950/40 flex gap-2 overflow-x-auto">
+            <div className="px-5 py-2.5 border-t border-slate-900 bg-[var(--bg-dark)]/40 flex gap-2 overflow-x-auto">
               {SUGGESTIONS.map((q) => (
                 <button
                   key={q}
                   onClick={() => handleSend(q)}
                   disabled={isTyping}
-                  className="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-[11px] font-semibold text-slate-400 hover:text-emerald-300 whitespace-nowrap transition-colors cursor-pointer"
+                  className="px-3 py-1.5 rounded-none bg-slate-900 hover:bg-slate-800 border border-slate-800 text-[11px] font-semibold text-slate-400 hover:text-[#33e4ff] whitespace-nowrap transition-colors cursor-pointer"
                 >
                   💬 {q}
                 </button>
@@ -189,7 +189,7 @@ export default function AICoachModal({ isOpen, onClose }) {
             </div>
 
             {/* Input Footer */}
-            <div className="p-4 border-t border-slate-800/80 bg-slate-950/80">
+            <div className="p-4 border-t border-slate-800/80 bg-[var(--bg-dark)]/80">
               <form
                 onSubmit={(e) => {
                   e.preventDefault()
@@ -203,12 +203,12 @@ export default function AICoachModal({ isOpen, onClose }) {
                   onChange={(e) => setInputValue(e.target.value)}
                   placeholder="Ask about exercises, RPE, rest, or macros..."
                   disabled={isTyping}
-                  className="flex-1 py-3 px-4 rounded-xl bg-slate-900 border border-slate-800 text-xs font-medium text-white outline-none focus:border-emerald-500 transition-colors"
+                  className="flex-1 py-3 px-4 rounded-none bg-slate-900 border border-slate-800 text-xs font-medium text-white outline-none focus:border-[#00d9ff] transition-colors"
                 />
                 <button
                   type="submit"
                   disabled={isTyping || !inputValue.trim()}
-                  className="p-3 rounded-xl btn-primary cursor-pointer disabled:opacity-50"
+                  className="p-3 rounded-none btn-primary cursor-pointer disabled:opacity-50"
                 >
                   <Send size={15} />
                 </button>
