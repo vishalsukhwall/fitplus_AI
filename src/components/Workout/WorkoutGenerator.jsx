@@ -1,4 +1,4 @@
-﻿/**
+/**
  * WorkoutGenerator.jsx — AI Workout Generator (Elite Edition)
  * src/components/Workout/WorkoutGenerator.jsx
  * ──────────────────────────────────────────────────────────────
@@ -41,64 +41,8 @@ const LOADING_STEPS = [
   'Finalizing your personalized routine...',
 ]
 
-/* ─── workoutReducer ─────────────────────────────────────── */
-const initialState = {
-  selectedMuscleGroup: '',
-  customInput:         '',
-  exercises:           [],
-  completedIds:        [],       // array (Set not serializable)
-  isGenerating:        false,
-  hasGenerated:        false,
-  error:               null,
-  loadingStep:         0,
-}
+import { workoutReducer, initialState } from '../../store/workoutReducer'
 
-function workoutReducer(state, action) {
-  switch (action.type) {
-
-    case 'SET_MUSCLE_GROUP':
-      return { ...state, selectedMuscleGroup: action.payload, customInput: '', error: null }
-
-    case 'SET_CUSTOM_INPUT':
-      return { ...state, customInput: action.payload, selectedMuscleGroup: '', error: null }
-
-    case 'GENERATE_START':
-      return { ...state, isGenerating: true, hasGenerated: false, error: null, exercises: [], completedIds: [], loadingStep: 0 }
-
-    case 'LOADING_STEP':
-      return { ...state, loadingStep: action.payload }
-
-    case 'GENERATE_SUCCESS':
-      return {
-        ...state,
-        isGenerating:  false,
-        hasGenerated:  true,
-        exercises:     action.payload,
-        completedIds:  [],
-        error:         null,
-      }
-
-    case 'GENERATE_ERROR':
-      return { ...state, isGenerating: false, error: action.payload }
-
-    case 'TOGGLE_EXERCISE': {
-      const id = action.payload
-      const already = state.completedIds.includes(id)
-      return {
-        ...state,
-        completedIds: already
-          ? state.completedIds.filter(x => x !== id)
-          : [...state.completedIds, id],
-      }
-    }
-
-    case 'RESET':
-      return { ...initialState }
-
-    default:
-      return state
-  }
-}
 
 /* ─── Muscle Group Selector Button ───────────────────────── */
 function MuscleGroupBtn({ group, isSelected, onClick }) {

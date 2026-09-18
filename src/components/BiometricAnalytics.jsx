@@ -1,11 +1,11 @@
-﻿import React, { useState } from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import {
   BarChart3, TrendingUp, HeartPulse, Activity,
   Calendar, Flame, Zap, Award, ArrowUpRight
 } from 'lucide-react'
 
-export default function BiometricAnalytics() {
+function BiometricAnalytics() {
   const [range, setRange] = useState('30D')
 
   const PR_PROGRESSIONS = [
@@ -136,3 +136,5 @@ export default function BiometricAnalytics() {
     </div>
   )
 }
+
+export default React.memo(BiometricAnalytics)

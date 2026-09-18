@@ -1,11 +1,11 @@
-﻿import React, { useState } from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import {
   User, ShieldCheck, HeartPulse, Smartphone,
   HardDrive, Key, Sliders, Check, Copy, RefreshCw
 } from 'lucide-react'
 
-export default function SettingsView() {
+function SettingsView() {
   const [unitSystem, setUnitSystem] = useState('metric')
   const [autoSync, setAutoSync] = useState(true)
   const [hapticFeedback, setHapticFeedback] = useState(true)
@@ -160,3 +160,5 @@ export default function SettingsView() {
     </div>
   )
 }
+
+export default React.memo(SettingsView)

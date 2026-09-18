@@ -9,6 +9,7 @@ import WorkoutLogger       from './components/WorkoutLogger'
 import BiometricAnalytics  from './components/BiometricAnalytics'
 import SettingsView        from './components/SettingsView'
 import AICoachModal        from './components/AICoachModal'
+import ErrorBoundary       from './components/ErrorBoundary'
 import { Sparkles } from 'lucide-react'
 
 export default function App() {
@@ -18,7 +19,8 @@ export default function App() {
   const [activeVolume, setActiveVolume] = useState(14850)
 
   return (
-    <div className="min-h-screen text-slate-100 font-sans flex relative overflow-x-hidden" style={{ background: 'var(--bg-dark)' }}>
+    <ErrorBoundary section="App" icon="🏋️">
+    <div className="min-h-screen text-slate-100 font-sans flex relative overflow-x-hidden" style={{ background: 'var(--bg-dark, #09090b)' }}>
 
       {/* Cyber Dot-Grid Mesh Background */}
       <div className="grid-bg fixed inset-0 pointer-events-none z-0 opacity-60" />
@@ -71,38 +73,50 @@ export default function App() {
               transition={{ duration: 0.22, ease: 'easeOut' }}
             >
               {(activeView === 'dashboard' || activeView === 'overview') && (
-                <Dashboard
-                  setActiveView={setActiveView}
-                  onOpenCoach={() => setIsCoachOpen(true)}
-                  activeVolume={activeVolume}
-                  setActiveVolume={setActiveVolume}
-                />
+                <ErrorBoundary section="Dashboard" icon="📊">
+                  <Dashboard
+                    setActiveView={setActiveView}
+                    onOpenCoach={() => setIsCoachOpen(true)}
+                    activeVolume={activeVolume}
+                    setActiveVolume={setActiveVolume}
+                  />
+                </ErrorBoundary>
               )}
 
               {activeView === 'generator' && (
-                <WorkoutGenerator
-                  setActiveView={setActiveView}
-                  onOpenCoach={() => setIsCoachOpen(true)}
-                />
+                <ErrorBoundary section="Workout Generator" icon="🏋️">
+                  <WorkoutGenerator
+                    setActiveView={setActiveView}
+                    onOpenCoach={() => setIsCoachOpen(true)}
+                  />
+                </ErrorBoundary>
               )}
 
               {activeView === 'macros' && (
-                <MacroTracker />
+                <ErrorBoundary section="Macro Tracker" icon="🔬">
+                  <MacroTracker />
+                </ErrorBoundary>
               )}
 
               {activeView === 'logger' && (
-                <WorkoutLogger
-                  activeVolume={activeVolume}
-                  setActiveVolume={setActiveVolume}
-                />
+                <ErrorBoundary section="Workout Logger" icon="📝">
+                  <WorkoutLogger
+                    activeVolume={activeVolume}
+                    setActiveVolume={setActiveVolume}
+                  />
+                </ErrorBoundary>
               )}
 
               {activeView === 'analytics' && (
-                <BiometricAnalytics />
+                <ErrorBoundary section="Biometric Analytics" icon="📈">
+                  <BiometricAnalytics />
+                </ErrorBoundary>
               )}
 
               {activeView === 'settings' && (
-                <SettingsView />
+                <ErrorBoundary section="Settings" icon="⚙️">
+                  <SettingsView />
+                </ErrorBoundary>
               )}
             </motion.div>
           </AnimatePresence>
@@ -118,10 +132,10 @@ export default function App() {
           position: 'fixed', bottom: '28px', right: '28px', zIndex: 40,
           display: 'flex', alignItems: 'center', gap: '8px',
           padding: '0 20px', height: '48px',
-          background: 'var(--accent-cyan)',
-          color: 'var(--bg-dark)',
+          background: 'var(--accent-cyan, #00d9ff)',
+          color: 'var(--bg-dark, #09090b)',
           border: 'none', borderRadius: 0, cursor: 'pointer',
-          fontSize: 'var(--text-sm)', fontWeight: 700,
+          fontSize: 'var(--text-sm, 0.875rem)', fontWeight: 700,
           boxShadow: '0 0 30px rgba(0,217,255,0.35)',
         }}
         aria-label="Open AI Assistant"
@@ -137,5 +151,6 @@ export default function App() {
       />
 
     </div>
+    </ErrorBoundary>
   )
 }

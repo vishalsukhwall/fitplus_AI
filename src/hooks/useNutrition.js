@@ -1,10 +1,10 @@
-﻿/**
+/**
  * useNutrition.js — Nutrition State Management Hook
  * ──────────────────────────────────────────────────
  * Wraps nutritionReducer with useReducer + localStorage persistence.
  * Provides stable action dispatchers for common operations.
  */
-import { useReducer, useEffect } from 'react'
+import { useReducer, useEffect, useRef } from 'react'
 import { nutritionReducer, initialState } from '../store/nutritionReducer'
 
 const STORAGE_KEY = 'fitpulse_nutrition_state'
@@ -19,16 +19,25 @@ export function useNutrition() {
     }
   })
 
-  // Persist to localStorage on every state change
+  // Persist to localStorage on every state change — debounced 250ms
+  // so rapid interactions (e.g. typing) don't trigger a write per event.
+  const debounceTimer = useRef(null)
+
   useEffect(() => {
-    try {
-      // Don't persist videoStream (not serializable)
-      const { scanner, ...rest } = state
-      const { videoStream, ...safeScanner } = scanner
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...rest, scanner: safeScanner }))
-    } catch {
-      // Quota exceeded or private mode — fail silently
-    }
+    clearTimeout(debounceTimer.current)
+    debounceTimer.current = setTimeout(() => {
+      try {
+        // Don't persist videoStream (not serializable)
+        const { scanner, ...rest } = state
+        const { videoStream, ...safeScanner } = scanner
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...rest, scanner: safeScanner }))
+      } catch {
+        // Quota exceeded or private mode — fail silently
+        console.warn('useNutrition: localStorage write failed (quota exceeded or private mode)')
+      }
+    }, 250)
+
+    return () => clearTimeout(debounceTimer.current)
   }, [state])
 
   // ── Stable action helpers ─────────────────────────────────
