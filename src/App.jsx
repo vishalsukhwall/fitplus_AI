@@ -10,6 +10,7 @@ import BiometricAnalytics  from './components/BiometricAnalytics'
 import SettingsView        from './components/SettingsView'
 import AICoachModal        from './components/AICoachModal'
 import ErrorBoundary       from './components/ErrorBoundary'
+import FoodScanner         from './components/Scanner/FoodScanner'
 import { Sparkles } from 'lucide-react'
 
 export default function App() {
@@ -95,6 +96,12 @@ export default function App() {
               {activeView === 'macros' && (
                 <ErrorBoundary section="Macro Tracker" icon="🔬">
                   <MacroTracker />
+                </ErrorBoundary>
+              )}
+
+              {activeView === 'scanner' && (
+                <ErrorBoundary section="Food Scanner" icon="📷">
+                  <FoodScanner />
                 </ErrorBoundary>
               )}
 
