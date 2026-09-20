@@ -146,12 +146,15 @@ export function useFoodScanner(customStorageKey = STORAGE_KEY) {
   }, [])
 
   // ── Automatic localStorage persistence (debounced 200ms) ───
+  const isInternalUpdateRef = useRef(false)
+
   useEffect(() => {
     if (typeof window === 'undefined' || !window.localStorage) return
 
     clearTimeout(debounceTimerRef.current)
     debounceTimerRef.current = setTimeout(() => {
       try {
+        isInternalUpdateRef.current = true
         const payloadToPersist = {
           mealLog: {
             meals: state.mealLog.meals,
@@ -160,13 +163,44 @@ export function useFoodScanner(customStorageKey = STORAGE_KEY) {
           },
         }
         window.localStorage.setItem(customStorageKey, JSON.stringify(payloadToPersist))
+        window.dispatchEvent(new CustomEvent('fitpulse_nutrition_update', { detail: { source: 'useFoodScanner' } }))
       } catch (err) {
         console.warn('useFoodScanner: localStorage sync error', err)
+      } finally {
+        setTimeout(() => {
+          isInternalUpdateRef.current = false
+        }, 50)
       }
     }, 200)
 
     return () => clearTimeout(debounceTimerRef.current)
   }, [state.mealLog, customStorageKey])
+
+  // Cross-component and cross-tab synchronization listener
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const handleSync = () => {
+      if (isInternalUpdateRef.current) return
+      try {
+        const saved = window.localStorage.getItem(customStorageKey)
+        if (saved) {
+          const parsed = JSON.parse(saved)
+          dispatch({ type: 'REHYDRATE', payload: parsed })
+        }
+      } catch (err) {
+        console.warn('useFoodScanner: error during sync rehydration', err)
+      }
+    }
+
+    window.addEventListener('storage', handleSync)
+    window.addEventListener('fitpulse_nutrition_update', handleSync)
+
+    return () => {
+      window.removeEventListener('storage', handleSync)
+      window.removeEventListener('fitpulse_nutrition_update', handleSync)
+    }
+  }, [customStorageKey])
 
   // ── Scanner Lifecycle Actions ─────────────────────────────
   const startScanner = useCallback(() => {

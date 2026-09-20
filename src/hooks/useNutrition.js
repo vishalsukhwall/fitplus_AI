@@ -22,23 +22,59 @@ export function useNutrition() {
   // Persist to localStorage on every state change — debounced 250ms
   // so rapid interactions (e.g. typing) don't trigger a write per event.
   const debounceTimer = useRef(null)
+  const isInternalUpdate = useRef(false)
 
   useEffect(() => {
     clearTimeout(debounceTimer.current)
     debounceTimer.current = setTimeout(() => {
       try {
+        isInternalUpdate.current = true
         // Don't persist videoStream (not serializable)
         const { scanner, ...rest } = state
         const { videoStream, ...safeScanner } = scanner
         localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...rest, scanner: safeScanner }))
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('fitpulse_nutrition_update', { detail: { source: 'useNutrition' } }))
+        }
       } catch {
         // Quota exceeded or private mode — fail silently
         console.warn('useNutrition: localStorage write failed (quota exceeded or private mode)')
+      } finally {
+        setTimeout(() => {
+          isInternalUpdate.current = false
+        }, 50)
       }
     }, 250)
 
     return () => clearTimeout(debounceTimer.current)
   }, [state])
+
+  // Cross-component and cross-tab synchronization listener
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const handleSync = () => {
+      // Avoid re-processing our own synchronous writes
+      if (isInternalUpdate.current) return
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY)
+        if (saved) {
+          const parsed = JSON.parse(saved)
+          dispatch({ type: 'REHYDRATE', payload: parsed })
+        }
+      } catch (err) {
+        console.warn('useNutrition: error during sync rehydration', err)
+      }
+    }
+
+    window.addEventListener('storage', handleSync)
+    window.addEventListener('fitpulse_nutrition_update', handleSync)
+
+    return () => {
+      window.removeEventListener('storage', handleSync)
+      window.removeEventListener('fitpulse_nutrition_update', handleSync)
+    }
+  }, [])
 
   // ── Stable action helpers ─────────────────────────────────
   const actions = {
