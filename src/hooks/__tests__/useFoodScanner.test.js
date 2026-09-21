@@ -166,4 +166,46 @@ describe('useFoodScanner Hook', () => {
       expect.stringContaining('Grilled Chicken Salad')
     )
   })
+
+  it('performs live FastAPI inference when valid dataURL is captured and API succeeds', async () => {
+    // Mock global fetch for API response
+    const mockApiResponse = {
+      success: true,
+      name: 'Paneer Tikka Bowl',
+      confidence: 0.992,
+      portion: '350g bowl',
+      category: 'Vegetarian / High-Protein',
+      description: 'Tandoori paneer with turmeric rice',
+      totalCalories: 520,
+      macros: { protein: 28, carbs: 42, fat: 26 },
+      foodItems: [{ name: 'Tandoori Chargrilled Paneer', calories: 310, portion: '160g' }],
+    }
+
+    const originalFetch = global.fetch
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => mockApiResponse,
+    })
+
+    try {
+      const { result } = renderHook(() => useFoodScanner())
+
+      let promise
+      act(() => {
+        promise = result.current.captureAndAnalyze('data:image/jpeg;base64,/9j/4AAQSkZJRg==')
+      })
+
+      await act(async () => {
+        await promise
+      })
+
+      expect(result.current.scanResult.name).toBe('Paneer Tikka Bowl')
+      expect(result.current.scanResult.totalCalories).toBe(520)
+      expect(result.current.scanResult.macros.protein).toBe(28)
+      expect(result.current.scanResult.confidence).toBe(0.992)
+    } finally {
+      global.fetch = originalFetch
+    }
+  })
 })
+

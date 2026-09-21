@@ -13,6 +13,7 @@
 
 import { useReducer, useEffect, useRef, useCallback } from 'react'
 import { nutritionReducer, initialState, recalculateTotals } from '../store/nutritionReducer'
+import { scanFoodImage } from '../services/api'
 
 export const STORAGE_KEY = 'fitpulse_nutrition_state'
 
@@ -231,13 +232,54 @@ export function useFoodScanner(customStorageKey = STORAGE_KEY) {
     dispatch({ type: 'SCAN_RESET' })
   }, [])
 
-  // ── ML Simulation Engine (Realistic 1.5s latency) ─────────
+  // ── ML Inference Engine (FastAPI Backend with Heuristic Fallback) ──
   const captureAndAnalyze = useCallback(
     async (imageData = null, preferredIndex = null) => {
       dispatch({ type: 'SCAN_IMAGE', payload: imageData })
 
       try {
-        // Realistic network & neural inference delay: 1500ms
+        // If a real image payload is provided (dataURL or Blob/File), attempt FastAPI backend inference
+        const isRealImagePayload =
+          (typeof imageData === 'string' && imageData.startsWith('data:image/')) ||
+          (typeof Blob !== 'undefined' && imageData instanceof Blob)
+
+        if (isRealImagePayload && preferredIndex === null) {
+          try {
+            const apiResult = await scanFoodImage(imageData)
+            if (!isMountedRef.current) return null
+
+            const scanPayload = {
+              name: apiResult.name || apiResult.food_name || 'Detected Dish',
+              portion: apiResult.portion || '1 serving',
+              category: apiResult.category || 'High-Protein Fuel',
+              description: apiResult.description || '',
+              totalCalories: apiResult.totalCalories ?? apiResult.total_calories ?? apiResult.macros?.calories ?? 0,
+              macros: {
+                protein: apiResult.macros?.protein ?? 0,
+                carbs: apiResult.macros?.carbs ?? 0,
+                fat: apiResult.macros?.fat ?? 0,
+              },
+              confidence: apiResult.confidence ?? 0.98,
+              foodItems: (apiResult.foodItems || apiResult.food_items || []).map((item) => ({
+                name: item.name,
+                calories: item.calories,
+                portion: item.portion,
+              })),
+              imageMetadata: apiResult.imageMetadata ?? null,
+              imageData: typeof imageData === 'string' ? imageData : null,
+              timestamp: apiResult.timestamp || new Date().toISOString(),
+              source: 'fastapi_ml_backend',
+            }
+
+            dispatch({ type: 'ANALYSIS_COMPLETE', payload: scanPayload })
+            return scanPayload
+          } catch (apiErr) {
+            console.warn('useFoodScanner: live FastAPI inference unavailable, falling back to local heuristic model:', apiErr?.message)
+            // Fall through to local simulation below
+          }
+        }
+
+        // Local Heuristic / Demo Simulation (with realistic 1500ms delay)
         await new Promise((resolve) => setTimeout(resolve, 1500))
 
         if (!isMountedRef.current) return null
@@ -255,6 +297,7 @@ export function useFoodScanner(customStorageKey = STORAGE_KEY) {
           ...selectedFood,
           imageData,
           timestamp: new Date().toISOString(),
+          source: 'local_heuristic',
         }
 
         dispatch({ type: 'ANALYSIS_COMPLETE', payload: scanPayload })
