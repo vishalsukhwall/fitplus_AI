@@ -2,9 +2,9 @@
 FitPulse Elite — Full-Stack Python ML Backend
 ─────────────────────────────────────────────
 High-performance asynchronous FastAPI microservice providing:
-  - Computer vision food scanning via OpenCV
+  - Computer vision food scanning via OpenCV & Hugging Face Inference API
   - Instant macronutrient & caloric vector calculation
-  - Strict CORS middleware for frontend communication
+  - Strict CORS middleware for React Vite communication
   - Health checks & system telemetry
 """
 
@@ -15,10 +15,9 @@ from typing import List
 
 from fastapi import FastAPI, File, UploadFile, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
 
 from schemas import FoodScanResponse, HealthResponse
-from ml_vision import classify_food_image
+from ml_vision import classify_food_image, HF_TOKEN
 
 # ── Logging Configuration ────────────────────────────────────────────────────
 logging.basicConfig(
@@ -28,7 +27,6 @@ logging.basicConfig(
 logger = logging.getLogger("fitpulse-ml")
 
 # ── Allowed Origins for CORS ─────────────────────────────────────────────────
-# Supports React Vite dev server, alternative localhost ports, and custom env overrides
 DEFAULT_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
@@ -49,7 +47,8 @@ ALLOWED_ORIGINS: List[str] = (
 # ── Application Lifespan ─────────────────────────────────────────────────────
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("Initializing FitPulse Elite ML Vision Subsystem...")
+    hf_status = "Enabled" if HF_TOKEN else "Disabled (using OpenCV local heuristics)"
+    logger.info(f"Initializing FitPulse Elite ML Vision Subsystem... [Hugging Face: {hf_status}]")
     yield
     logger.info("Shutting down FitPulse Elite ML Vision Subsystem.")
 
@@ -79,12 +78,14 @@ app.add_middleware(
 @app.get("/health", response_model=HealthResponse, tags=["System"])
 async def health_check():
     """
-    Health check endpoint returning service status, version, and server timestamp.
+    Health check endpoint returning service status, version, and Hugging Face config state.
     """
+    is_hf_ready = bool(os.getenv("HUGGINGFACE_API_TOKEN") or os.getenv("HF_TOKEN"))
     return HealthResponse(
         status="ok",
         version="1.0.0",
         service="FitPulse Vision ML Engine",
+        huggingface_configured=is_hf_ready,
     )
 
 
@@ -98,7 +99,8 @@ async def health_check():
 async def scan_food(file: UploadFile = File(..., description="Multipart food image file")):
     """
     Accepts an uploaded food image file (JPEG, PNG, WEBP), performs computer vision
-    analysis using OpenCV, and calculates comprehensive macronutrient profiles.
+    analysis using OpenCV and Hugging Face Inference API, and calculates
+    comprehensive macronutrient profiles.
     """
     logger.info(f"Incoming food scan request: filename='{file.filename}', content_type='{file.content_type}'")
 
@@ -118,9 +120,12 @@ async def scan_food(file: UploadFile = File(..., description="Multipart food ima
                 detail="Uploaded file is empty. Please provide a valid image.",
             )
 
-        # Execute OpenCV ML feature extraction & taxonomy classification
-        result = classify_food_image(image_bytes)
-        logger.info(f"Classification successful: dish='{result.name}', confidence={result.confidence}, calories={result.totalCalories} kcal")
+        # Execute async hybrid inference (OpenCV + Hugging Face)
+        result = await classify_food_image(image_bytes)
+        logger.info(
+            f"Classification successful: dish='{result.name}', provider='{result.model_provider}', "
+            f"confidence={result.confidence}, calories={result.totalCalories} kcal"
+        )
         return result
 
     except ValueError as val_err:
