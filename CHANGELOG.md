@@ -7,3 +7,4 @@
 - 2026-09-26 22:59: test: add baseline test coverage for membership calculation logic
 - 2026-09-26 22:59: docs: clarify API response payload formats in documentation
 - Activity log update
+- [2026-09-25T11:00:00] docs: update installation steps and environment setup in README
