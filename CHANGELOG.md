@@ -17,3 +17,4 @@
 - [2026-09-25T14:30:00] docs: clarify API response payload formats in documentation
 - [2026-09-25T11:00:00] docs: update installation steps and environment setup in README
 - [2026-09-25T11:30:00] feat(auth): set up initial structure for user onboarding flow
+- [2026-09-25T12:00:00] chore: update dependencies and remove unused imports
