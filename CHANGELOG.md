@@ -12,3 +12,4 @@
 - [2026-09-25T12:00:00] chore: update dependencies and remove unused imports
 - [2026-09-25T12:30:00] refactor: improve workout routine data structure and models
 - [2026-09-25T13:00:00] style: tweak dashboard card responsiveness and spacing
+- [2026-09-25T13:30:00] fix(api): handle edge-case error when fetching fitness logs
