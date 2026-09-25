@@ -16,3 +16,4 @@
 - [2026-09-25T14:00:00] test: add baseline test coverage for membership calculation logic
 - [2026-09-25T14:30:00] docs: clarify API response payload formats in documentation
 - [2026-09-25T11:00:00] docs: update installation steps and environment setup in README
+- [2026-09-25T11:30:00] feat(auth): set up initial structure for user onboarding flow
