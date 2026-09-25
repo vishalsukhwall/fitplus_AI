@@ -14,3 +14,4 @@
 - [2026-09-25T13:00:00] style: tweak dashboard card responsiveness and spacing
 - [2026-09-25T13:30:00] fix(api): handle edge-case error when fetching fitness logs
 - [2026-09-25T14:00:00] test: add baseline test coverage for membership calculation logic
+- [2026-09-25T14:30:00] docs: clarify API response payload formats in documentation
