@@ -1,0 +1,1 @@
+- 2026-09-26 22:59: docs: update installation steps and environment setup in README
