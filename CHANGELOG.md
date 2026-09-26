@@ -1,3 +1,4 @@
 - 2026-09-26 22:59: docs: update installation steps and environment setup in README
 - 2026-09-26 22:59: feat(auth): set up initial structure for user onboarding flow
 - 2026-09-26 22:59: chore: update dependencies and remove unused imports
+- 2026-09-26 22:59: refactor: improve workout routine data structure and models
