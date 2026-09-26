@@ -2,3 +2,4 @@
 - 2026-09-26 22:59: feat(auth): set up initial structure for user onboarding flow
 - 2026-09-26 22:59: chore: update dependencies and remove unused imports
 - 2026-09-26 22:59: refactor: improve workout routine data structure and models
+- 2026-09-26 22:59: style: tweak dashboard card responsiveness and spacing
