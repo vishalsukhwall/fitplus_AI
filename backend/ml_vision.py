@@ -109,6 +109,7 @@ FOOD_TAXONOMY_MAP: Dict[str, Dict[str, Any]] = {
         ],
         "visual_profile": {"green_weight": 0.05, "warm_weight": 0.20, "red_weight": 0.40, "base_conf": 0.979},
     },
+    
     "caesar_salad": {
         "name": "Caesar Salad with Grilled Chicken",
         "portion": "300g bowl",
@@ -117,8 +118,8 @@ FOOD_TAXONOMY_MAP: Dict[str, Dict[str, Any]] = {
         "totalCalories": 360,
         "macros": {"calories": 360, "protein": 38.0, "carbs": 14.0, "fat": 16.0},
         "foodItems": [
-            {"name": "Grilled Chicken Strips", "calories": 220, "portion": "160g"},
-            {"name": "Romaine Lettuce & Shaved Parmesan", "calories": 70, "portion": "110g"},
+            {"name": "Grilled Chicken Strips", "calories": 240, "portion": "160g"},
+            {"name": "Romaine Lettuce & Shaved Parmesan", "calories": 90, "portion": "110g"},
             {"name": "Light Caesar Dressing", "calories": 70, "portion": "30g"},
         ],
         "visual_profile": {"green_weight": 0.55, "warm_weight": 0.20, "red_weight": 0.10, "base_conf": 0.975},

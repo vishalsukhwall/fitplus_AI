@@ -1,0 +1,63 @@
+[33mcommit 5e117b6bf2f19d67c6c140b3d9cec6052781c088[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author:     vishalsukhwall <vishalsukhwal33@gmail.com>
+AuthorDate: Fri Sep 25 14:30:00 2026 +0530
+Commit:     vishalsukhwall <vishalsukhwal33@gmail.com>
+CommitDate: Fri Sep 25 14:30:00 2026 +0530
+
+    docs: clarify API response payload formats in documentation
+
+[33mcommit eb61bb7ff0b18e16dbb6b64f94f65c87eccd3230[m
+Author:     vishalsukhwall <vishalsukhwal33@gmail.com>
+AuthorDate: Fri Sep 25 14:00:00 2026 +0530
+Commit:     vishalsukhwall <vishalsukhwal33@gmail.com>
+CommitDate: Fri Sep 25 14:00:00 2026 +0530
+
+    test: add baseline test coverage for membership calculation logic
+
+[33mcommit 18644e8bd38053b96ab1f3e07b9a645acde1c1da[m
+Author:     vishalsukhwall <vishalsukhwal33@gmail.com>
+AuthorDate: Fri Sep 25 13:30:00 2026 +0530
+Commit:     vishalsukhwall <vishalsukhwal33@gmail.com>
+CommitDate: Fri Sep 25 13:30:00 2026 +0530
+
+    fix(api): handle edge-case error when fetching fitness logs
+
+[33mcommit 3290681dd13b0d60052896b2a0174c67c3a0dd99[m
+Author:     vishalsukhwall <vishalsukhwal33@gmail.com>
+AuthorDate: Fri Sep 25 13:00:00 2026 +0530
+Commit:     vishalsukhwall <vishalsukhwal33@gmail.com>
+CommitDate: Fri Sep 25 13:00:00 2026 +0530
+
+    style: tweak dashboard card responsiveness and spacing
+
+[33mcommit 346e8809f0a05f44f060643d04920ce2018e3009[m
+Author:     vishalsukhwall <vishalsukhwal33@gmail.com>
+AuthorDate: Fri Sep 25 12:30:00 2026 +0530
+Commit:     vishalsukhwall <vishalsukhwal33@gmail.com>
+CommitDate: Fri Sep 25 12:30:00 2026 +0530
+
+    refactor: improve workout routine data structure and models
+
+[33mcommit 119e8a8a43d2a685d5316ab8c372aa7ce1dad9e3[m
+Author:     vishalsukhwall <vishalsukhwal33@gmail.com>
+AuthorDate: Fri Sep 25 12:00:00 2026 +0530
+Commit:     vishalsukhwall <vishalsukhwal33@gmail.com>
+CommitDate: Fri Sep 25 12:00:00 2026 +0530
+
+    chore: update dependencies and remove unused imports
+
+[33mcommit dca5b1c3105e8cdc295fccfc22299bacafb3691c[m
+Author:     vishalsukhwall <vishalsukhwal33@gmail.com>
+AuthorDate: Fri Sep 25 11:30:00 2026 +0530
+Commit:     vishalsukhwall <vishalsukhwal33@gmail.com>
+CommitDate: Fri Sep 25 11:30:00 2026 +0530
+
+    feat(auth): set up initial structure for user onboarding flow
+
+[33mcommit e99e328e4f8084af65fcc7ed3bc7bfb1617f16f9[m
+Author:     vishalsukhwall <vishalsukhwal33@gmail.com>
+AuthorDate: Fri Sep 25 11:00:00 2026 +0530
+Commit:     vishalsukhwall <vishalsukhwal33@gmail.com>
+CommitDate: Fri Sep 25 11:00:00 2026 +0530
+
+    docs: update installation steps and environment setup in README
