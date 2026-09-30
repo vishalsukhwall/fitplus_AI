@@ -130,7 +130,6 @@ def decode_image_bytes(image_bytes: bytes) -> np.ndarray:
         raise ValueError("Failed to decode image. Unsupported or corrupted format.")
     return image
 
-
 def classify_food_image(image_bytes: bytes) -> FoodScanResponse:
     image = decode_image_bytes(image_bytes)
     height, width, channels = image.shape
