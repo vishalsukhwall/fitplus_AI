@@ -17,10 +17,12 @@ function useCounter(target, duration, active) {
       setVal(Math.floor(p * target))
       if (p < 1) requestAnimationFrame(step)
     }
+
     requestAnimationFrame(step)
   }, [active, target, duration])
   return val
 }
+
 
 /* ──  Interactive Dashboard Mockup Card ── */
 function DashboardCard() {

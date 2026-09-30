@@ -58,6 +58,7 @@ export default function WorkoutLogger({ activeVolume, setActiveVolume }) {
     return () => clearInterval(timer)
   }, [isRunning])
 
+  
   useEffect(() => {
     let restTimer = null
     if (restRunning && restSeconds > 0) {

@@ -166,6 +166,7 @@ export default function AIPlanner() {
         const adjustedCal = Math.round(base.calories * (weightNum / 75))
         const adjustedProt = Math.round(base.protein * (weightNum / 75))
 
+        
         setGeneratedPlan({
           ...base,
           calories: adjustedCal,
@@ -180,7 +181,7 @@ export default function AIPlanner() {
     }, 650)
   }
 
-  
+
   const handleCopy = () => {
     const text = `FITPULSE AI CUSTOM PROTOCOL
 Goal: ${generatedPlan.title}

@@ -5,6 +5,7 @@ import {
   Zap, MessageSquare, CornerDownLeft, ShieldCheck
 } from 'lucide-react'
 
+
 const SUGGESTIONS = [
   "How much protein post-workout?",
   "Substitute back squats (knee fatigue)",

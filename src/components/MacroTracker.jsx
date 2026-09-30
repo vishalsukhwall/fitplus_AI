@@ -9,6 +9,7 @@ import {
 import { useNutrition } from '../hooks/useNutrition'
 import MealLogger from './Meals/MealLogger'
 
+
 export default function MacroTracker() {
   const { state } = useNutrition()
   const { dailyTotal } = state.mealLog

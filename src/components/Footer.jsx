@@ -5,6 +5,7 @@ import {
   Globe, MessageCircle, Video, Music, Link as LinkIcon
 } from 'lucide-react'
 
+
 const LINKS = {
   Product: ['Autonomous Workout Engine', 'Multimodal Vision Macro', 'Form Guard Computer Vision', '24/7 Neural Voice Coach', 'Biometric Integrations'],
   Company: ['About FitPulse', 'Research Papers', 'Careers (We’re Hiring)', 'Press & Media Kit', 'Security Whitepaper'],

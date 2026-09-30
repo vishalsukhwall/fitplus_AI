@@ -105,6 +105,7 @@ function SettingsView() {
                 onClick={() => setUnitSystem('metric')}
                 className={`px-3 py-1 rounded text-xs font-bold ${unitSystem === 'metric' ? 'bg-[#00d9ff] text-black' : 'text-slate-400'}`}
               >
+                
                 Metric (kg/cm)
               </button>
               <button

@@ -14,6 +14,7 @@ function BiometricAnalytics() {
     { lift: 'Conventional Deadlift', current: '220 kg', baseline: '195 kg', gain: '+12.8%', date: 'Last week' },
     { lift: 'Standing Overhead Press', current: '82.5 kg', baseline: '72.5 kg', gain: '+13.7%', date: '5 days ago' },
   ]
+  
 
   const MUSCLE_DISTRIBUTION = [
     { muscle: 'Quadriceps & Hamstrings', sets: 42, pct: 28, color: '#10b981' },

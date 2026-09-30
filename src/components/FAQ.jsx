@@ -4,6 +4,7 @@ import { ChevronDown, HelpCircle, Sparkles } from 'lucide-react'
 
 const FAQS = [
   {
+    
     q: 'How does FitPulse AI personalize my workout blocks?',
     a: "FitPulse AI combines your specific fitness targets, anatomical joint restrictions, past injury records, available equipment, and live readiness data. Rather than generating a static spreadsheet, it is an autoregulated program that recalculates optimal loads, reps, and sets each week.",
   },

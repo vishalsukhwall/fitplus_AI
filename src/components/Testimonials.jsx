@@ -65,6 +65,7 @@ function ReviewCard({ r, index }) {
         borderColor: 'rgba(16,185,129,0.45)',
         boxShadow: '0 20px 40px -15px rgba(0,0,0,0.7), 0 0 25px rgba(16,185,129,0.12)',
       }}
+      
       style={{
         background: 'rgba(15,23,42,0.65)',
         backdropFilter: 'blur(16px)',

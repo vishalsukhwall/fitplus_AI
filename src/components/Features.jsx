@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   Dumbbell, Camera, Eye, Mic, Sparkles,
   ArrowRight, ChevronDown, Cpu, Wifi, Clock, Check
-} from 'lucide-react'
+} from 'lucide-react' 
+ 
 
 /* ── Interactive Demo Components ── */
 function WorkoutDemo() {

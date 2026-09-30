@@ -25,6 +25,7 @@ import ExerciseCard from './Workout/ExerciseCard'
 import { generateWorkoutFromAI, MUSCLE_GROUPS } from '../utils/workoutAI'
 import { workoutReducer, initialState } from '../store/workoutReducer'
 
+
 const WORKOUT_STORAGE_KEY = 'fitpulse_workout_state'
 
 /* ─── Loading step messages for realistic neural inference telemetry ─── */

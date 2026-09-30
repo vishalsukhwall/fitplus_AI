@@ -32,6 +32,7 @@ const VIEW_META = {
   scanner:   { title: 'Food Scanner',         section: 'Nutrition' },
 }
 
+
 /* ─── Notification Dot ──────────────────────────────────────── */
 function NotifDot() {
   return (

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, Sparkles, Zap, Building2, ChevronRight, Star } from 'lucide-react'
 
+
 const PLANS = [
   {
     id: 'starter',

@@ -7,6 +7,7 @@ import {
   Plus, Droplets, RefreshCw
 } from 'lucide-react'
 
+
 // Simulated AI Chat dialogue and responses
 const INITIAL_CHAT = [
   { sender: 'coach', time: '10:42 AM', text: "Good morning Alex! Your HRV scored 78ms and sleep was 8h 12m (94% recovery). Today's hypertrophy session is set for Upper Body Power." },
