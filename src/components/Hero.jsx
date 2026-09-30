@@ -39,6 +39,7 @@ function DashboardCard() {
     { name: 'Cable Lateral Raise',   sets: '3 × 15', done: false },
   ])
 
+  
   const togglePlan = (index) => {
     setPlan(prev => prev.map((item, i) => i === index ? { ...item, done: !item.done } : item))
   }
