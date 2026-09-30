@@ -12,7 +12,6 @@
  *   3. Analysis Telemetry: Neural inference loading HUD with 1.5s latency feedback.
  *   4. Result Mount: Mounts ScanResult.jsx with instant logging & re-scan handlers.
  */
-
 import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {

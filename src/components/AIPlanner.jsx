@@ -180,6 +180,7 @@ export default function AIPlanner() {
     }, 650)
   }
 
+  
   const handleCopy = () => {
     const text = `FITPULSE AI CUSTOM PROTOCOL
 Goal: ${generatedPlan.title}

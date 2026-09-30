@@ -23,7 +23,7 @@ function useCounter(target, duration, active) {
   return val
 }
 
-/* ── Interactive Dashboard Mockup Card ── */
+/* ──  Interactive Dashboard Mockup Card ── */
 function DashboardCard() {
   const cardRef = useRef(null)
   const isInView = useInView(cardRef, { once: true, margin: '-40px' })
