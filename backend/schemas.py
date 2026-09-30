@@ -9,7 +9,6 @@ from typing import List, Optional
 from pydantic import BaseModel, Field
 from datetime import datetime
 
-
 class MacrosSchema(BaseModel):
     calories: int = Field(..., description="Total energy in kcal")
     protein: float = Field(..., description="Protein content in grams")

@@ -120,7 +120,6 @@ FOOD_KNOWLEDGE_BASE = [
     }
 ]
 
-
 def decode_image_bytes(image_bytes: bytes) -> np.ndarray:
     if not image_bytes or len(image_bytes) == 0:
         raise ValueError("Empty image byte buffer received.")

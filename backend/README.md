@@ -5,7 +5,6 @@ Asynchronous computer vision and macronutrient inference backend built with **Fa
 ---
 
 ## ⚡ Quickstart
-
 ### 1. Virtual Environment Setup
 ```bash
 # From the backend/ folder:
@@ -50,7 +49,6 @@ Returns system status, service name, and timestamp.
   "timestamp": "2026-09-21T16:30:00.000000Z"
 }
 ```
-
 ### `POST /api/v1/scan-food`
 Accepts `multipart/form-data` with key `file` (JPEG, PNG, WebP).
 Performs in-memory OpenCV feature extraction (HSV color distribution, texture entropy via Laplacian variance) and returns calculated nutritional metrics.
