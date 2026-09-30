@@ -5,7 +5,6 @@ import {
   Dumbbell, CheckCircle2, Activity, Zap, Star, ShieldCheck,
   Terminal, Sparkles
 } from 'lucide-react'
-
 /* Animated counter hook */
 function useCounter(target, duration, active) {
   const [val, setVal] = useState(0)
@@ -39,7 +38,7 @@ function DashboardCard() {
     { name: 'Cable Lateral Raise',   sets: '3 × 15', done: false },
   ])
 
-  
+
   const togglePlan = (index) => {
     setPlan(prev => prev.map((item, i) => i === index ? { ...item, done: !item.done } : item))
   }

@@ -20,6 +20,7 @@ export default function Navbar({ scrolled }) {
     return () => { document.body.style.overflow = '' }
   }, [open])
 
+  
   return (
     <motion.header
       initial={{ y: -70, opacity: 0 }}

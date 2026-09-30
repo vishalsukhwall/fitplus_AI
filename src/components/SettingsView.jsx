@@ -5,6 +5,7 @@ import {
   HardDrive, Key, Sliders, Check, Copy, RefreshCw
 } from 'lucide-react'
 
+
 function SettingsView() {
   const [unitSystem, setUnitSystem] = useState('metric')
   const [autoSync, setAutoSync] = useState(true)
