@@ -3,8 +3,6 @@
  * ──────────────────────────────────────────────────
  * Catches runtime errors and renders a themed fallback
  * instead of a white browser error screen.
- *
- * 
  * Usage:
  *   <ErrorBoundary>
  *     <YourComponent />

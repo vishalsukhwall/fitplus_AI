@@ -165,7 +165,6 @@ export default function AIPlanner() {
         const weightNum = parseFloat(weight) || 75
         const adjustedCal = Math.round(base.calories * (weightNum / 75))
         const adjustedProt = Math.round(base.protein * (weightNum / 75))
-        
         setGeneratedPlan({
           ...base,
           calories: adjustedCal,
