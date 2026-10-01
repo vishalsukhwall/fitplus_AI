@@ -4,7 +4,6 @@
  * Production-ready computer vision subsystem for FitPulse Elite.
  * Styled in Titanium Minimalist / Cyber Dark aesthetic (#09090b bg,
  * #00d9ff cyber accents, 0px border-radius glassmorphism).
- *
  * Modules:
  *   1. Empty State UI: Clean dashed container with cyber iconography & telemetry.
  *   2. Active Viewport: Camera overlay with #00d9ff reticle, corner brackets,
