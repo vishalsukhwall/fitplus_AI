@@ -49,6 +49,7 @@ export default function WorkoutLogger({ activeVolume, setActiveVolume }) {
     },
   ])
 
+
   // Stopwatch effect
   useEffect(() => {
     let timer = null
@@ -84,6 +85,7 @@ export default function WorkoutLogger({ activeVolume, setActiveVolume }) {
     setRestRunning(true)
   }
 
+
   // Toggle Set Complete
   const handleToggleSet = (exId, setId) => {
     setExercises(prev => prev.map(ex => {
@@ -107,6 +109,7 @@ export default function WorkoutLogger({ activeVolume, setActiveVolume }) {
     }))
   }
 
+  
   // Update Set Weight or Reps
   const handleUpdateSet = (exId, setId, field, val) => {
     const num = parseFloat(val) || 0
