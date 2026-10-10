@@ -11,13 +11,61 @@ import SettingsView        from './components/SettingsView'
 import AICoachModal        from './components/AICoachModal'
 import ErrorBoundary       from './components/ErrorBoundary'
 import FoodScanner         from './components/Scanner/FoodScanner'
-import { Sparkles } from 'lucide-react'
+import Navbar              from './components/Navbar'
+import Hero                from './components/Hero'
+import Features            from './components/Features'
+import Pricing             from './components/Pricing'
+import Testimonials        from './components/Testimonials'
+import FAQ                 from './components/FAQ'
+import Footer              from './components/Footer'
+import { Sparkles, ArrowLeft } from 'lucide-react'
 
 export default function App() {
   const [activeView, setActiveView] = useState('dashboard') // 'dashboard' | 'generator' | 'macros' | 'logger' | 'analytics' | 'settings'
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isCoachOpen, setIsCoachOpen] = useState(false)
   const [activeVolume, setActiveVolume] = useState(14850)
+
+  if (activeView === 'landing') {
+    return (
+      <ErrorBoundary section="Landing Page" icon="⚡">
+        <div className="min-h-screen text-slate-100 font-sans relative overflow-x-hidden" style={{ background: 'var(--bg-dark, #09090b)' }}>
+          {/* Cyber Dot-Grid Mesh Background */}
+          <div className="grid-bg fixed inset-0 pointer-events-none z-0 opacity-60" />
+
+          {/* Sticky Return-to-App Button */}
+          <div className="fixed top-4 right-4 sm:right-8 z-50 flex items-center gap-2">
+            <button
+              onClick={() => setActiveView('dashboard')}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '8px',
+                padding: '9px 20px',
+                background: 'rgba(0, 217, 255, 0.15)',
+                border: '1px solid rgba(0, 217, 255, 0.45)',
+                color: 'var(--accent-cyan, #00d9ff)',
+                fontSize: '12px', fontWeight: 700,
+                backdropFilter: 'blur(16px)',
+                boxShadow: '0 0 25px rgba(0, 217, 255, 0.3)',
+                cursor: 'pointer',
+              }}
+            >
+              <span>⚡ Enter App Dashboard</span>
+            </button>
+          </div>
+
+          <Navbar onEnterApp={() => setActiveView('dashboard')} />
+          <Hero onGetStarted={() => setActiveView('dashboard')} onExploreDashboard={() => setActiveView('dashboard')} />
+          <Features />
+          <Pricing onSelectPlan={() => setActiveView('dashboard')} />
+          <Testimonials />
+          <FAQ />
+          <Footer />
+
+          <AICoachModal isOpen={isCoachOpen} onClose={() => setIsCoachOpen(false)} />
+        </div>
+      </ErrorBoundary>
+    )
+  }
 
   return (
     <ErrorBoundary section="App" icon="🏋️">
@@ -57,6 +105,7 @@ export default function App() {
         {/* Top Navigation Bar */}
         <Header
           activeView={activeView}
+          setActiveView={setActiveView}
           setMobileOpen={setMobileOpen}
           onOpenCoach={() => setIsCoachOpen(true)}
         />

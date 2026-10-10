@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FitPulse Elite — Neural Nutrition Engine</title>
+  <meta name="description" content="Next-generation minimalist computer vision nutrition platform." />
+
+  <!-- Fonts: Inter (UI) & JetBrains Mono (Telemetry) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#07090e',
+            surface: '#0c1017',
+            'surface-card': '#101622',
+            cyan: '#00f2fe',
+            'cyan-dim': '#00b8d4',
+            emerald: '#00ff87',
+          },
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      background-color: #07090e;
+      color: #f8fafc;
+      font-family: 'Inter', -apple-system, sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection { background: rgba(0, 242, 254, 0.25); color: #ffffff; }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #07090e; }
+    ::-webkit-scrollbar-thumb { background: #1a2233; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #2a354f; }
+
+    /* Ultra-Clean Glassmorphism */
+    .glass-surface {
+      background: rgba(12, 16, 23, 0.65);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .glass-surface-hover {
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-surface-hover:hover {
+      background: rgba(16, 22, 34, 0.8);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    /* Ambient Spotlight */
+    .ambient-spotlight {
+      position: fixed;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 680px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Laser Scanner Beam */
+    @keyframes laserSweep {
+      0% { top: 8%; opacity: 0.85; }
+      50% { opacity: 0.3; }
+      100% { top: 90%; opacity: 0.85; }
+    }
+    .laser-line {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, rgba(0, 242, 254, 0.8) 25%, #00f2fe 50%, rgba(0, 255, 135, 0.8) 75%, transparent 100%);
+      box-shadow: 0 0 16px #00f2fe, 0 0 32px rgba(0, 242, 254, 0.4);
+      animation: laserSweep 1.7s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    /* Minimal Viewfinder Reticles */
+    .reticle-corner {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      pointer-events: none;
+      z-index: 15;
+    }
+    .reticle-corner.tl { top: 16px; left: 16px; border-top: 1.5px solid rgba(0, 242, 254, 0.7); border-left: 1.5px solid rgba(0, 242, 254, 0.7); }
+    .reticle-corner.tr { top: 16px; right: 16px; border-top: 1.5px solid rgba(0, 242, 254, 0.7); border-right: 1.5px solid rgba(0, 242, 254, 0.7); }
+    .reticle-corner.bl { bottom: 16px; left: 16px; border-bottom: 1.5px solid rgba(0, 242, 254, 0.7); border-left: 1.5px solid rgba(0, 242, 254, 0.7); }
+    .reticle-corner.br { bottom: 16px; right: 16px; border-bottom: 1.5px solid rgba(0, 242, 254, 0.7); border-right: 1.5px solid rgba(0, 242, 254, 0.7); }
+
+    /* SVG Circular Progress Ring */
+    .progress-ring-circle {
+      transition: stroke-dashoffset 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+
+    /* Slide-out Drawers */
+    .slide-drawer {
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .slide-drawer.open {
+      transform: translateX(0);
+    }
+
+    /* View transitions */
+    .tab-view {
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .tab-view.hidden-view {
+      display: none !important;
+      opacity: 0;
+    }
+  </style>
+</head>
+
+<body class="bg-obsidian text-slate-100 flex flex-col justify-between min-h-screen">
+
+  <!-- Ambient Top Glow -->
+  <div class="ambient-spotlight"></div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- 1. ULTRA-CLEAN NAVIGATION BAR (Linear Standard)         -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <header class="sticky top-0 z-40 bg-obsidian/75 backdrop-blur-xl border-b border-white/[0.06]">
+    <div class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="#" onclick="switchTab('scanner'); return false;" class="flex items-center gap-2 group">
+        <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-cyan via-cyan-dim to-emerald flex items-center justify-center shadow-[0_0_16px_rgba(0,242,254,0.3)]">
+          <i data-lucide="zap" class="w-3.5 h-3.5 text-obsidian fill-obsidian"></i>
+        </div>
+        <span class="text-sm font-semibold tracking-tight text-white">FitPulse <span class="text-cyan font-normal">Elite</span></span>
+      </a>
+
+      <!-- Smooth Minimal Tab Switcher -->
+      <nav class="flex items-center p-1 rounded-xl bg-white/[0.03] border border-white/[0.06] text-xs">
+        <button id="nav-scanner" onclick="switchTab('scanner')" class="px-3.5 py-1.5 rounded-lg font-medium text-white bg-white/[0.08] shadow-sm transition-all">
+          Live CV Scanner
+        </button>
+        <button id="nav-overview" onclick="switchTab('overview')" class="px-3.5 py-1.5 rounded-lg font-medium text-slate-400 hover:text-white transition-all">
+          Overview
+        </button>
+      </nav>
+
+      <!-- Right Action Items -->
+      <div class="flex items-center gap-3">
+        
+        <!-- Apple Watch Recovery Badge (Opens Telemetry Drawer) -->
+        <button onclick="toggleTelemetryDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.06] hover:border-emerald/30 transition-all text-xs" title="Click to view Apple Watch Telemetry">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald animate-pulse"></span>
+          <span class="text-slate-400 hidden sm:inline">Recovery:</span>
+          <span class="font-medium text-white font-mono">94%</span>
+        </button>
+
+        <!-- AI Coach Drawer Trigger -->
+        <button onclick="toggleCoachDrawer()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan/10 hover:bg-cyan/15 border border-cyan/25 text-cyan text-xs font-semibold transition-all">
+          <i data-lucide="bot" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">AI Coach</span>
+        </button>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- 2. MAIN "FOCUS MODE" CONTAINER                          -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <main class="flex-1 max-w-4xl w-full mx-auto px-6 py-10 relative z-10">
+
+    <!-- ───────────────────────────────────────────────────── -->
+    <!-- VIEW A: LIVE CV SCANNER (Core Focus Experience)        -->
+    <!-- ───────────────────────────────────────────────────── -->
+    <div id="tab-view-scanner" class="tab-view space-y-8">
+      
+      <!-- Minimalist Preset Meal Tabs (Clean 3-Tab Pill Row) -->
+      <div class="flex items-center justify-center">
+        <div class="inline-flex p-1.5 rounded-2xl bg-white/[0.02] border border-white/[0.06] gap-1.5 max-w-md w-full justify-between" id="meal-tabs">
+          
+          <button onclick="selectMeal('fish')" class="meal-pill flex-1 py-2 px-3 rounded-xl text-xs font-medium text-white bg-white/[0.08] border border-cyan/40 shadow-[0_0_15px_rgba(0,242,254,0.1)] transition-all flex items-center justify-center gap-1.5" data-meal="fish">
+            <span>🐟</span>
+            <span>Grilled Fish</span>
+          </button>
+
+          <button onclick="selectMeal('avocado')" class="meal-pill flex-1 py-2 px-3 rounded-xl text-xs font-medium text-slate-400 hover:text-white border border-transparent transition-all flex items-center justify-center gap-1.5" data-meal="avocado">
+            <span>🥑</span>
+            <span>Avocado Toast</span>
+          </button>
+
+          <button onclick="selectMeal('paneer')" class="meal-pill flex-1 py-2 px-3 rounded-xl text-xs font-medium text-slate-400 hover:text-white border border-transparent transition-all flex items-center justify-center gap-1.5" data-meal="paneer">
+            <span>🍛</span>
+            <span>Paneer Bowl</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Focused Scanner Container -->
+      <div class="glass-surface rounded-3xl p-6 sm:p-8 space-y-7 shadow-2xl relative">
+        
+        <!-- Viewport Scanning Frame -->
+        <div class="relative w-full h-64 sm:h-72 rounded-2xl bg-[#090d16] border border-white/[0.06] overflow-hidden flex items-center justify-center">
+          
+          <!-- Viewfinder Brackets -->
+          <div class="reticle-corner tl"></div>
+          <div class="reticle-corner tr"></div>
+          <div class="reticle-corner bl"></div>
+          <div class="reticle-corner br"></div>
+
+          <!-- Futuristic Laser Line -->
+          <div id="laser-beam" class="laser-line hidden"></div>
+
+          <!-- Subject Food Display -->
+          <div id="food-visual-container" class="text-center select-none transition-all duration-300">
+            <span id="food-emoji" class="text-7xl sm:text-8xl block select-none">🐟</span>
+            <div id="food-custom-photo" class="hidden absolute inset-0 w-full h-full object-cover"></div>
+          </div>
+
+          <!-- CV Bounding Box Pill Tag -->
+          <div id="cv-tag-container" class="absolute top-6 left-6 pointer-events-none z-20">
+            <div class="px-3 py-1 rounded-full bg-obsidian/90 border border-cyan/40 text-cyan text-[11px] font-mono shadow-lg flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-cyan"></span>
+              <span id="cv-label-text">Tilapia Fillet · 98.4% Match</span>
+            </div>
+          </div>
+
+          <!-- Bottom Viewport Utility Bar -->
+          <div class="absolute bottom-4 left-6 right-6 flex items-center justify-between text-xs pointer-events-none z-20">
+            <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-obsidian/85 border border-white/[0.08] backdrop-blur-md">
+              <span id="scan-status-dot" class="w-1.5 h-1.5 rounded-full bg-emerald"></span>
+              <span id="scan-status-text" class="text-slate-300 font-mono text-[11px]">OPENCV 4.10 // OPTIMAL DENSITY</span>
+            </div>
+
+            <!-- Upload Plate Photo Trigger -->
+            <button onclick="document.getElementById('plate-file-input').click()" class="pointer-events-auto flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-slate-300 hover:text-white transition-all text-xs font-medium" title="Upload custom photo">
+              <i data-lucide="camera" class="w-3.5 h-3.5"></i>
+              <span>Drop Plate</span>
+            </button>
+            <input type="file" id="plate-file-input" accept="image/*" class="hidden" onchange="handleImageUpload(event)" />
+          </div>
+
+        </div>
+
+        <!-- Meal Title & Sleek Portion Toggle -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
+          <div>
+            <div class="text-[11px] font-mono uppercase tracking-wider text-cyan font-medium">Neural Identification</div>
+            <h2 id="meal-display-name" class="text-xl sm:text-2xl font-bold text-white tracking-tight mt-0.5">
+              Herb-Crusted Grilled Fish
+            </h2>
+          </div>
+
+          <!-- Sleek Portion Multipliers (0.5x, 1x, 2x) -->
+          <div class="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+            <span class="text-[11px] font-mono text-slate-400 px-2">Scale:</span>
+            <button onclick="setMultiplier(0.5)" class="mult-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white transition-all" data-mult="0.5">0.5x</button>
+            <button onclick="setMultiplier(1.0)" class="mult-btn px-2.5 py-1 rounded-lg text-xs font-mono font-bold text-cyan bg-cyan/15 border border-cyan/30 shadow-sm transition-all" data-mult="1.0">1x</button>
+            <button onclick="setMultiplier(2.0)" class="mult-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white transition-all" data-mult="2.0">2x</button>
+          </div>
+        </div>
+
+        <!-- 4 Minimalist Macro Cards with Circular SVG Rings -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
+          
+          <!-- Calories Card -->
+          <div class="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-between">
+            <div>
+              <div class="text-[11px] font-medium text-slate-400 mb-1">Calories</div>
+              <div class="flex items-baseline gap-1">
+                <span id="metric-calories" class="text-2xl font-bold text-white font-mono">340</span>
+                <span class="text-[10px] text-slate-500 font-mono">kcal</span>
+              </div>
+              <div class="text-[10px] text-slate-500 font-mono mt-1">15% daily</div>
+            </div>
+
+            <!-- SVG Ring -->
+            <div class="relative w-12 h-12 shrink-0">
+              <svg class="w-12 h-12" viewBox="0 0 36 36">
+                <path class="text-white/[0.06]" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path id="ring-calories" class="progress-ring-circle text-orange-400" stroke-width="3" stroke-linecap="round" stroke-dasharray="100, 100" stroke-dashoffset="55" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Protein Card -->
+          <div class="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-between">
+            <div>
+              <div class="text-[11px] font-medium text-cyan mb-1">Protein</div>
+              <div class="flex items-baseline gap-1">
+                <span id="metric-protein" class="text-2xl font-bold text-white font-mono">42</span>
+                <span class="text-[10px] text-slate-500 font-mono">g</span>
+              </div>
+              <div class="text-[10px] text-slate-500 font-mono mt-1" id="share-protein">48% share</div>
+            </div>
+
+            <!-- SVG Ring -->
+            <div class="relative w-12 h-12 shrink-0">
+              <svg class="w-12 h-12" viewBox="0 0 36 36">
+                <path class="text-white/[0.06]" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path id="ring-protein" class="progress-ring-circle text-cyan" stroke-width="3" stroke-linecap="round" stroke-dasharray="100, 100" stroke-dashoffset="28" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Carbs Card -->
+          <div class="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-between">
+            <div>
+              <div class="text-[11px] font-medium text-emerald mb-1">Carbs</div>
+              <div class="flex items-baseline gap-1">
+                <span id="metric-carbs" class="text-2xl font-bold text-white font-mono">10</span>
+                <span class="text-[10px] text-slate-500 font-mono">g</span>
+              </div>
+              <div class="text-[10px] text-slate-500 font-mono mt-1" id="share-carbs">12% share</div>
+            </div>
+
+            <!-- SVG Ring -->
+            <div class="relative w-12 h-12 shrink-0">
+              <svg class="w-12 h-12" viewBox="0 0 36 36">
+                <path class="text-white/[0.06]" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path id="ring-carbs" class="progress-ring-circle text-emerald" stroke-width="3" stroke-linecap="round" stroke-dasharray="100, 100" stroke-dashoffset="85" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Fats Card -->
+          <div class="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-between">
+            <div>
+              <div class="text-[11px] font-medium text-purple-400 mb-1">Fats</div>
+              <div class="flex items-baseline gap-1">
+                <span id="metric-fats" class="text-2xl font-bold text-white font-mono">15</span>
+                <span class="text-[10px] text-slate-500 font-mono">g</span>
+              </div>
+              <div class="text-[10px] text-slate-500 font-mono mt-1" id="share-fats">40% share</div>
+            </div>
+
+            <!-- SVG Ring -->
+            <div class="relative w-12 h-12 shrink-0">
+              <svg class="w-12 h-12" viewBox="0 0 36 36">
+                <path class="text-white/[0.06]" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path id="ring-fats" class="progress-ring-circle text-purple-400" stroke-width="3" stroke-linecap="round" stroke-dasharray="100, 100" stroke-dashoffset="68" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              </svg>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Clean Segmented Components List -->
+        <div class="pt-2 border-t border-white/[0.05]">
+          <div class="flex items-center justify-between mb-3 text-xs text-slate-400 font-medium">
+            <span>Detected Plate Components</span>
+            <span id="component-count-label" class="font-mono text-[11px] text-cyan">4 items</span>
+          </div>
+          <div id="components-breakdown-list" class="divide-y divide-white/[0.04] text-xs">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ───────────────────────────────────────────────────── -->
+    <!-- VIEW B: EXECUTIVE OVERVIEW (Apple / Vercel Aesthetic)  -->
+    <!-- ───────────────────────────────────────────────────── -->
+    <div id="tab-view-overview" class="tab-view hidden-view space-y-16 py-8">
+      
+      <!-- Headline -->
+      <div class="text-center space-y-4 max-w-2xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan/10 border border-cyan/25 text-xs text-cyan font-mono">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald"></span>
+          FitPulse Elite v2.4 Architecture
+        </div>
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+          Decode Your Plate.<br />
+          <span class="text-slate-400">Master Your Metabolism.</span>
+        </h1>
+        <p class="text-sm sm:text-base text-slate-400 leading-relaxed max-w-xl mx-auto">
+          High-performance computer vision nutrition engine designed to bridge real-time optical food segmentation with Apple Watch biometric recovery telemetry.
+        </p>
+        <div class="pt-2">
+          <button onclick="switchTab('scanner')" class="px-6 py-3 rounded-xl bg-white text-obsidian font-semibold text-xs hover:bg-slate-200 transition-all shadow-lg">
+            Launch Live CV Scanner →
+          </button>
+        </div>
+      </div>
+
+      <!-- 3 Minimalist Pillars -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="p-6 rounded-2xl glass-surface space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-cyan">
+            <i data-lucide="scan" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-sm font-semibold text-white">OpenCV Computer Vision</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Multi-spectral food segmentation and volumetric contour mapping with sub-150ms inference latency.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl glass-surface space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-emerald">
+            <i data-lucide="watch" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-sm font-semibold text-white">Apple Watch Telemetry</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Live HRV (78ms) and CNS sleep readiness sync adapt your carbohydrate and protein refueling windows dynamically.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl glass-surface space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-purple-400">
+            <i data-lucide="bot" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-sm font-semibold text-white">AI Coach Intelligence</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Conversational GPT-4o assistant provides tailored nutritional adjustments based on live neuromuscular recovery.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- 3. HIDDEN-BY-DEFAULT SLIDE-OUT DRAWERS                  -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+
+  <!-- Drawer Backdrop Overlay -->
+  <div id="drawer-overlay" onclick="closeAllDrawers()" class="fixed inset-0 bg-obsidian/60 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300"></div>
+
+  <!-- DRAWER 1: AI Coach Command Drawer -->
+  <aside id="drawer-coach" class="slide-drawer fixed top-0 right-0 bottom-0 w-full sm:w-[420px] bg-[#0c1017] border-l border-white/[0.08] z-50 flex flex-col shadow-2xl">
+    <div class="px-6 py-5 border-b border-white/[0.06] flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-lg bg-cyan/10 border border-cyan/25 flex items-center justify-center text-cyan">
+          <i data-lucide="bot" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <div class="text-xs font-bold text-white">AI Performance Coach</div>
+          <div class="text-[10px] font-mono text-emerald flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald"></span> Synced with Biometrics
+          </div>
+        </div>
+      </div>
+      <button onclick="closeAllDrawers()" class="w-7 h-7 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] flex items-center justify-center text-slate-400 hover:text-white transition-colors">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- Chat Messages Container -->
+    <div id="coach-messages-stream" class="flex-1 overflow-y-auto px-6 py-6 space-y-4 text-xs">
+      <div class="p-4 rounded-xl bg-white/[0.03] border border-white/[0.05] text-slate-300 leading-relaxed">
+        <div class="text-[10px] font-mono text-cyan mb-1 font-semibold">AI ASSISTANT</div>
+        Your HRV is currently <strong>78ms (94% Recovery)</strong>. You have <strong>842 active calories</strong> logged today. How can I fine-tune your meal timing or hypertrophy goals?
+      </div>
+    </div>
+
+    <!-- Chat Input Form -->
+    <div class="p-4 border-t border-white/[0.06] bg-[#090d15]">
+      <form onsubmit="handleCoachSubmit(event)" class="flex items-center gap-2">
+        <input type="text" id="coach-input" placeholder="Ask about macros, meal timing, recovery..." class="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan/40 transition-all font-sans" />
+        <button type="submit" class="w-9 h-9 rounded-xl bg-cyan text-obsidian flex items-center justify-center hover:opacity-90 transition-opacity shrink-0 font-bold">
+          <i data-lucide="arrow-up" class="w-4 h-4"></i>
+        </button>
+      </form>
+    </div>
+  </aside>
+
+  <!-- DRAWER 2: Apple Watch Live Telemetry Drawer -->
+  <aside id="drawer-telemetry" class="slide-drawer fixed top-0 right-0 bottom-0 w-full sm:w-[420px] bg-[#0c1017] border-l border-white/[0.08] z-50 flex flex-col shadow-2xl">
+    <div class="px-6 py-5 border-b border-white/[0.06] flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-lg bg-emerald/10 border border-emerald/25 flex items-center justify-center text-emerald">
+          <i data-lucide="watch" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <div class="text-xs font-bold text-white">Apple Watch Ultra II</div>
+          <div class="text-[10px] font-mono text-emerald flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald"></span> BLE 5.3 Streaming (18ms Sync)
+          </div>
+        </div>
+      </div>
+      <button onclick="closeAllDrawers()" class="w-7 h-7 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] flex items-center justify-center text-slate-400 hover:text-white transition-colors">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- Telemetry Cards -->
+    <div class="flex-1 overflow-y-auto px-6 py-6 space-y-4 text-xs font-mono">
+      
+      <div class="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-1">
+        <div class="text-slate-400 text-[10px] uppercase">Heart Rate Variability (SDNN)</div>
+        <div class="text-3xl font-bold text-cyan">78 ms</div>
+        <div class="text-[10px] text-emerald">+12ms vs 30-day baseline (Parasympathetic dominant)</div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-1">
+        <div class="text-slate-400 text-[10px] uppercase">CNS Recovery Readiness</div>
+        <div class="text-3xl font-bold text-emerald">94%</div>
+        <div class="text-[10px] text-slate-400">3h 42m Deep/REM Stage Architecture</div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-1">
+        <div class="text-slate-400 text-[10px] uppercase">Resting Cardiovascular Rate</div>
+        <div class="text-3xl font-bold text-white">52 bpm</div>
+        <div class="text-[10px] text-slate-400">Low sympathetic tension detected</div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-1">
+        <div class="text-slate-400 text-[10px] uppercase">Active Caloric Expenditure</div>
+        <div class="text-3xl font-bold text-orange-400">842 kcal</div>
+        <div class="text-[10px] text-slate-400">Zone 3-4 resistance block completed</div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-cyan/5 border border-cyan/20 text-slate-300 font-sans text-xs leading-relaxed">
+        <span class="text-cyan font-bold font-mono">Verdict:</span> Elevated glycogen uptake capacity. Refuel with 40g+ protein and moderate complex carbohydrates within 60 minutes.
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- Minimal Footer -->
+  <footer class="py-6 border-t border-white/[0.04] text-center text-xs text-slate-600">
+    <div class="max-w-4xl mx-auto px-6 flex items-center justify-between">
+      <div class="text-slate-500 font-mono text-[11px]">FitPulse Elite v2.4</div>
+      <div class="text-slate-500 text-[11px]">Designed for Silicon Valley Bio-Hacking &amp; Athletic Precision</div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- 4. JAVASCRIPT: CLEAN CORE ENGINE                        -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <script>
+    // State
+    let activeMealKey = 'fish';
+    let currentMultiplier = 1.0;
+    let isScanningActive = false;
+
+    // 3 Clean Preset Meals Database
+    const mealDatabase = {
+      fish: {
+        name: "Herb-Crusted Grilled Fish",
+        emoji: "🐟",
+        label: "Tilapia Fillet · 98.4% Match",
+        baseCal: 340,
+        basePro: 42,
+        baseCarb: 10,
+        baseFat: 15,
+        ringOffset: { cal: 55, pro: 28, carb: 85, fat: 68 },
+        components: [
+          { name: "Tilapia Whitefish Fillet", weight: "180g", cal: 210 },
+          { name: "Steamed Green Asparagus", weight: "90g", cal: 24 },
+          { name: "Garlic & Herb Crust", weight: "15g", cal: 65 },
+          { name: "Citrus Lemon Dressing", weight: "20g", cal: 41 }
+        ]
+      },
+      avocado: {
+        name: "Avocado Sourdough & Eggs",
+        emoji: "🥑",
+        label: "Hass Avocado & Sourdough · 99.1% Match",
+        baseCal: 480,
+        basePro: 18,
+        baseCarb: 52,
+        baseFat: 24,
+        ringOffset: { cal: 40, pro: 64, carb: 42, fat: 50 },
+        components: [
+          { name: "Artisan Sourdough Toast", weight: "120g", cal: 260 },
+          { name: "Fresh Hass Avocado Mash", weight: "90g", cal: 150 },
+          { name: "Poached Pasture Egg", weight: "50g", cal: 70 }
+        ]
+      },
+      paneer: {
+        name: "Paneer Tikka Bowl",
+        emoji: "🍛",
+        label: "Tandoori Paneer & Basmati · 98.1% Match",
+        baseCal: 520,
+        basePro: 28,
+        baseCarb: 44,
+        baseFat: 26,
+        ringOffset: { cal: 35, pro: 48, carb: 50, fat: 45 },
+        components: [
+          { name: "Tandoori Paneer Cubes", weight: "150g", cal: 285 },
+          { name: "Steamed Brown Basmati", weight: "110g", cal: 135 },
+          { name: "Charred Bell Peppers", weight: "80g", cal: 40 },
+          { name: "Mint Yogurt Chutney", weight: "30g", cal: 60 }
+        ]
+      }
+    };
+
+    // ── Tab Switching (Scanner vs Overview) ──
+    function switchTab(tab) {
+      const viewScanner = document.getElementById('tab-view-scanner');
+      const viewOverview = document.getElementById('tab-view-overview');
+      const navScanner = document.getElementById('nav-scanner');
+      const navOverview = document.getElementById('nav-overview');
+
+      if (tab === 'scanner') {
+        viewScanner.classList.remove('hidden-view');
+        viewOverview.classList.add('hidden-view');
+        navScanner.className = "px-3.5 py-1.5 rounded-lg font-medium text-white bg-white/[0.08] shadow-sm transition-all";
+        navOverview.className = "px-3.5 py-1.5 rounded-lg font-medium text-slate-400 hover:text-white transition-all";
+      } else {
+        viewOverview.classList.remove('hidden-view');
+        viewScanner.classList.add('hidden-view');
+        navOverview.className = "px-3.5 py-1.5 rounded-lg font-medium text-white bg-white/[0.08] shadow-sm transition-all";
+        navScanner.className = "px-3.5 py-1.5 rounded-lg font-medium text-slate-400 hover:text-white transition-all";
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ── Select Preset Meal ──
+    function selectMeal(key) {
+      if (isScanningActive) return;
+      activeMealKey = key;
+      const meal = mealDatabase[key];
+
+      // Update pill buttons
+      document.querySelectorAll('.meal-pill').forEach(btn => {
+        if (btn.dataset.meal === key) {
+          btn.className = "meal-pill flex-1 py-2 px-3 rounded-xl text-xs font-medium text-white bg-white/[0.08] border border-cyan/40 shadow-[0_0_15px_rgba(0,242,254,0.1)] transition-all flex items-center justify-center gap-1.5";
+        } else {
+          btn.className = "meal-pill flex-1 py-2 px-3 rounded-xl text-xs font-medium text-slate-400 hover:text-white border border-transparent transition-all flex items-center justify-center gap-1.5";
+        }
+      });
+
+      // Update Visual
+      document.getElementById('food-custom-photo').classList.add('hidden');
+      const emojiEl = document.getElementById('food-emoji');
+      emojiEl.classList.remove('hidden');
+      emojiEl.textContent = meal.emoji;
+
+      // Trigger Laser Scan
+      triggerScanAnimation(meal);
+    }
+
+    // ── Laser Scanning Animation ──
+    function triggerScanAnimation(meal) {
+      isScanningActive = true;
+      const laser = document.getElementById('laser-beam');
+      const statusText = document.getElementById('scan-status-text');
+      const statusDot = document.getElementById('scan-status-dot');
+      const cvTag = document.getElementById('cv-tag-container');
+
+      laser.classList.remove('hidden');
+      cvTag.style.opacity = '0';
+      statusText.textContent = 'SCANNING // OPTICAL DEPTH MAPPING...';
+      statusDot.className = 'w-1.5 h-1.5 rounded-full bg-cyan animate-ping';
+
+      setTimeout(() => {
+        laser.classList.add('hidden');
+        document.getElementById('cv-label-text').textContent = meal.label;
+        cvTag.style.opacity = '1';
+        statusText.textContent = 'OPENCV 4.10 // OPTIMAL DENSITY';
+        statusDot.className = 'w-1.5 h-1.5 rounded-full bg-emerald';
+        isScanningActive = false;
+        renderMetrics();
+      }, 650);
+    }
+
+    // ── Image Upload Handling ──
+    function handleImageUpload(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        document.getElementById('food-emoji').classList.add('hidden');
+        const photo = document.getElementById('food-custom-photo');
+        photo.classList.remove('hidden');
+        photo.style.backgroundImage = `url('${evt.target.result}')`;
+        photo.style.backgroundSize = 'cover';
+        photo.style.backgroundPosition = 'center';
+
+        mealDatabase['custom'] = {
+          name: "Custom Plate Analysis",
+          emoji: "📸",
+          label: "Custom Scan · 97.2% Match",
+          baseCal: 460,
+          basePro: 36,
+          baseCarb: 40,
+          baseFat: 18,
+          ringOffset: { cal: 45, pro: 38, carb: 55, fat: 60 },
+          components: [
+            { name: "Lean Protein Cluster", weight: "160g", cal: 240 },
+            { name: "Slow Glycogen Carbohydrate", weight: "120g", cal: 160 },
+            { name: "Micronutrient Greens", weight: "70g", cal: 60 }
+          ]
+        };
+
+        activeMealKey = 'custom';
+        document.querySelectorAll('.meal-pill').forEach(btn => {
+          btn.className = "meal-pill flex-1 py-2 px-3 rounded-xl text-xs font-medium text-slate-400 hover:text-white border border-transparent transition-all flex items-center justify-center gap-1.5";
+        });
+
+        triggerScanAnimation(mealDatabase['custom']);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // ── Portion Multiplier Toggle ──
+    function setMultiplier(mult) {
+      currentMultiplier = mult;
+
+      document.querySelectorAll('.mult-btn').forEach(btn => {
+        if (parseFloat(btn.dataset.mult) === mult) {
+          btn.className = "mult-btn px-2.5 py-1 rounded-lg text-xs font-mono font-bold text-cyan bg-cyan/15 border border-cyan/30 shadow-sm transition-all";
+        } else {
+          btn.className = "mult-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white transition-all";
+        }
+      });
+
+      renderMetrics();
+    }
+
+    // ── Metric Rendering & Ring Offsets ──
+    function renderMetrics() {
+      const meal = mealDatabase[activeMealKey] || mealDatabase.fish;
+      const m = currentMultiplier;
+
+      const cal = Math.round(meal.baseCal * m);
+      const pro = Math.round(meal.basePro * m);
+      const carb = Math.round(meal.baseCarb * m);
+      const fat = Math.round(meal.baseFat * m);
+
+      document.getElementById('meal-display-name').textContent = meal.name;
+
+      animateNumber('metric-calories', cal);
+      animateNumber('metric-protein', pro);
+      animateNumber('metric-carbs', carb);
+      animateNumber('metric-fats', fat);
+
+      // Energy contributions
+      const totalKcal = (pro * 4) + (carb * 4) + (fat * 9) || 1;
+      document.getElementById('share-protein').textContent = Math.round((pro * 4 / totalKcal) * 100) + '% share';
+      document.getElementById('share-carbs').textContent = Math.round((carb * 4 / totalKcal) * 100) + '% share';
+      document.getElementById('share-fats').textContent = Math.round((fat * 9 / totalKcal) * 100) + '% share';
+
+      // Circular Ring Progress Calculations (Circumference 100)
+      const calOffset = Math.max(0, 100 - (cal / 2200) * 100);
+      const proOffset = Math.max(0, 100 - (pro / 150) * 100);
+      const carbOffset = Math.max(0, 100 - (carb / 200) * 100);
+      const fatOffset = Math.max(0, 100 - (fat / 70) * 100);
+
+      document.getElementById('ring-calories').style.strokeDashoffset = calOffset;
+      document.getElementById('ring-protein').style.strokeDashoffset = proOffset;
+      document.getElementById('ring-carbs').style.strokeDashoffset = carbOffset;
+      document.getElementById('ring-fats').style.strokeDashoffset = fatOffset;
+
+      // Components breakdown
+      const compList = document.getElementById('components-breakdown-list');
+      document.getElementById('component-count-label').textContent = `${meal.components.length} items`;
+      compList.innerHTML = meal.components.map(c => `
+        <div class="py-2.5 flex items-center justify-between">
+          <span class="text-slate-300 font-medium">${c.name}</span>
+          <div class="flex items-center gap-4 text-slate-400 font-mono">
+            <span>${c.weight}</span>
+            <span class="text-white font-medium">${Math.round(c.cal * m)} kcal</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function animateNumber(elementId, target) {
+      const el = document.getElementById(elementId);
+      const start = parseInt(el.textContent) || 0;
+      const duration = 240;
+      const startTime = performance.now();
+
+      function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(start + (target - start) * eased);
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    // ── Drawer Management ──
+    function toggleCoachDrawer() {
+      const drawer = document.getElementById('drawer-coach');
+      const overlay = document.getElementById('drawer-overlay');
+      closeTelemetryDrawer();
+
+      if (drawer.classList.contains('open')) {
+        drawer.classList.remove('open');
+        overlay.classList.add('opacity-0');
+        setTimeout(() => overlay.classList.add('hidden'), 350);
+      } else {
+        overlay.classList.remove('hidden');
+        setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+        drawer.classList.add('open');
+      }
+    }
+
+    function toggleTelemetryDrawer() {
+      const drawer = document.getElementById('drawer-telemetry');
+      const overlay = document.getElementById('drawer-overlay');
+      closeCoachDrawer();
+
+      if (drawer.classList.contains('open')) {
+        drawer.classList.remove('open');
+        overlay.classList.add('opacity-0');
+        setTimeout(() => overlay.classList.add('hidden'), 350);
+      } else {
+        overlay.classList.remove('hidden');
+        setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+        drawer.classList.add('open');
+      }
+    }
+
+    function closeCoachDrawer() {
+      document.getElementById('drawer-coach').classList.remove('open');
+    }
+
+    function closeTelemetryDrawer() {
+      document.getElementById('drawer-telemetry').classList.remove('open');
+    }
+
+    function closeAllDrawers() {
+      closeCoachDrawer();
+      closeTelemetryDrawer();
+      const overlay = document.getElementById('drawer-overlay');
+      overlay.classList.add('opacity-0');
+      setTimeout(() => overlay.classList.add('hidden'), 350);
+    }
+
+    function handleCoachSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('coach-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const container = document.getElementById('coach-messages-stream');
+
+      // User Bubble
+      const userDiv = document.createElement('div');
+      userDiv.className = 'p-3.5 rounded-xl bg-cyan/10 border border-cyan/20 text-white ml-6';
+      userDiv.textContent = text;
+      container.appendChild(userDiv);
+
+      input.value = '';
+      container.scrollTop = container.scrollHeight;
+
+      // Simulated Intelligence Response
+      setTimeout(() => {
+        const aiDiv = document.createElement('div');
+        aiDiv.className = 'p-4 rounded-xl bg-white/[0.03] border border-white/[0.05] text-slate-300 leading-relaxed';
+        aiDiv.innerHTML = `
+          <div class="text-[10px] font-mono text-cyan mb-1 font-semibold">AI ASSISTANT</div>
+          With your <strong>78ms HRV</strong> and <strong>94% Recovery readiness</strong>, your neuromuscular system is in a high-tolerance window. Ingesting 40g+ protein with moderate carbohydrates now supports maximal mTOR muscle protein synthesis.
+        `;
+        container.appendChild(aiDiv);
+        container.scrollTop = container.scrollHeight;
+      }, 500);
+    }
+
+    // Escape Key Listener
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeAllDrawers();
+    });
+
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+      renderMetrics();
+    });
+  </script>
+</body>
+</html>

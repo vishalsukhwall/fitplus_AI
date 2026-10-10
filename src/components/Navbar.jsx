@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Zap, Menu, X, ChevronRight, Sparkles, Terminal } from 'lucide-react'
 
@@ -11,7 +11,7 @@ const NAV_LINKS = [
   { label: 'FAQ', href: '#faq' },
 ]
 
-export default function Navbar({ scrolled }) {
+export default function Navbar({ scrolled, onEnterApp }) {
   const [open, setOpen] = useState(false)
 
   // Prevent background scrolling when mobile menu is open
@@ -124,16 +124,29 @@ export default function Navbar({ scrolled }) {
               <span>Live Demo</span>
             </motion.a>
 
-            <motion.a
-              href="#pricing"
-              whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(16,185,129,0.65)' }}
-              whileTap={{ scale: 0.97 }}
-              className="btn-primary"
-              style={{ fontSize: 13.5, padding: '9px 18px' }}
-            >
-              <span>Start Free Trial</span>
-              <ChevronRight size={14} />
-            </motion.a>
+            {onEnterApp ? (
+              <motion.button
+                onClick={onEnterApp}
+                whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(16,185,129,0.65)' }}
+                whileTap={{ scale: 0.97 }}
+                className="btn-primary"
+                style={{ fontSize: 13.5, padding: '9px 18px', cursor: 'pointer', border: 'none' }}
+              >
+                <span>Launch App</span>
+                <ChevronRight size={14} />
+              </motion.button>
+            ) : (
+              <motion.a
+                href="#pricing"
+                whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(16,185,129,0.65)' }}
+                whileTap={{ scale: 0.97 }}
+                className="btn-primary"
+                style={{ fontSize: 13.5, padding: '9px 18px' }}
+              >
+                <span>Start Free Trial</span>
+                <ChevronRight size={14} />
+              </motion.a>
+            )}
           </div>
 
           {/* Mobile Hamburger Toggle */}

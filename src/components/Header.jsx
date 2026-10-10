@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Header.jsx — Elite Top Navigation Bar
  * Design: Titanium Minimalist Deep Space
  * ─────────────────────────────────────────────────────
@@ -22,6 +22,7 @@ import {
 
 /* ─── View Metadata Map ─────────────────────────────────────── */
 const VIEW_META = {
+  landing:   { title: 'Landing Page',         section: 'Marketing' },
   dashboard: { title: 'Dashboard',            section: 'Workspace' },
   overview:  { title: 'Dashboard',            section: 'Workspace' },
   generator: { title: 'AI Workout Generator', section: 'AI Models' },
@@ -175,7 +176,7 @@ function MobileToggle({ onClick }) {
 }
 
 /* ─── Main Header ───────────────────────────────────────────── */
-export default function Header({ activeView, setMobileOpen, onOpenCoach }) {
+export default function Header({ activeView, setActiveView, setMobileOpen, onOpenCoach }) {
   const meta = VIEW_META[activeView] ?? VIEW_META.dashboard
 
   return (
@@ -228,8 +229,28 @@ export default function Header({ activeView, setMobileOpen, onOpenCoach }) {
         </div>
       </div>
 
-      {/* ── RIGHT: Status | AI Coach | Notifs ── */}
+      {/* ── RIGHT: Status | AI Coach | Landing Toggle | Notifs ── */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
+        {/* Landing Page Quick Toggle */}
+        {setActiveView && (
+          <button
+            onClick={() => setActiveView(activeView === 'landing' ? 'dashboard' : 'landing')}
+            style={{
+              display: 'flex', alignItems: 'center', gap: '6px',
+              padding: '0 14px', height: '36px',
+              background: activeView === 'landing' ? 'rgba(0,217,255,0.15)' : 'rgba(255,255,255,0.05)',
+              border: '1px solid',
+              borderColor: activeView === 'landing' ? 'var(--accent-cyan)' : 'var(--border)',
+              color: activeView === 'landing' ? 'var(--accent-cyan)' : 'var(--text-secondary)',
+              fontSize: 'var(--text-xs)', fontWeight: 600,
+              borderRadius: 0, cursor: 'pointer',
+              transition: 'all 0.2s',
+            }}
+          >
+            <span>{activeView === 'landing' ? '← Back to App' : '🌐 Landing Page'}</span>
+          </button>
+        )}
+
         {/* Status pill — hidden on mobile */}
         <div className="hidden md:flex">
           <StatusPill />

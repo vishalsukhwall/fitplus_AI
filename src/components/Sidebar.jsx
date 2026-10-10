@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Sidebar.jsx — Elite Spacious Navigation Sidebar
  * Design: Titanium Minimalist Deep Space
  * ─────────────────────────────────────────────────────
@@ -26,11 +26,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   LayoutDashboard, Dumbbell, Utensils, Timer,
   BarChart3, Settings, Zap, X, Sparkles, ChevronRight,
-  ScanLine,
+  ScanLine, Globe,
 } from 'lucide-react'
 
 /* ─── Navigation Items ─────────────────────────────────────── */
 const NAV_ITEMS = [
+  { id: 'landing',   label: 'Landing Page',         icon: Globe,           badge: 'Public'   },
   { id: 'dashboard', label: 'Dashboard',           icon: LayoutDashboard, badge: null       },
   { id: 'generator', label: 'AI Workout Generator', icon: Dumbbell,        badge: 'AI'       },
   { id: 'macros',    label: 'Macro Tracker',        icon: Utensils,        badge: 'Active'   },
